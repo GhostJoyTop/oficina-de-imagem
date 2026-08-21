@@ -1,0 +1,182 @@
+{
+  "versao_formato": "1.0.0",
+  "gerado_em": "2026-08-21",
+
+  "_leia_isto_primeiro": [
+    "Este arquivo guarda os ENDERECOS TECNICOS do NovelAI como DADO, nunca como programa.",
+    "Motivo: a documentacao oficial do NovelAI NAO publica os enderecos da geracao de imagem.",
+    "Isso esta escrito no proprio tutorial que o autor leu, secao 19.8.",
+    "Por isso TODO endereco daqui esta marcado com \"verificado\": false.",
+    "Se um dia a geracao parar de funcionar, o conserto e AQUI, neste arquivo de texto.",
+    "Nenhum programa precisa ser alterado. Troque o endereco, salve, abra a oficina de novo.",
+    "O resto da oficina (montar prompt, ordenar tags, copiar e colar no site) nunca depende deste arquivo."
+  ],
+
+  "bases": {
+    "imagem": {
+      "url": "https://image.novelai.net",
+      "para_que_serve": "geracao de imagem, image2image, inpaint e as ferramentas de direcao",
+      "verificado": false
+    },
+    "conta": {
+      "url": "https://api.novelai.net",
+      "para_que_serve": "dados da conta e do saldo de Anlas",
+      "verificado": false
+    }
+  },
+
+  "rotas": {
+    "gerar": {
+      "base": "imagem",
+      "metodo": "POST",
+      "caminho": "/ai/generate-image",
+      "acao_no_corpo": "generate",
+      "resposta": "zip",
+      "descricao_pt": "Gera uma imagem a partir do prompt.",
+      "verificado": false
+    },
+    "img2img": {
+      "base": "imagem",
+      "metodo": "POST",
+      "caminho": "/ai/generate-image",
+      "acao_no_corpo": "img2img",
+      "resposta": "zip",
+      "descricao_pt": "Parte de uma imagem que ja existe e a transforma.",
+      "verificado": false
+    },
+    "inpaint": {
+      "base": "imagem",
+      "metodo": "POST",
+      "caminho": "/ai/generate-image",
+      "acao_no_corpo": "infill",
+      "resposta": "zip",
+      "descricao_pt": "Refaz so o pedaco coberto pela mascara.",
+      "verificado": false
+    },
+    "director": {
+      "base": "imagem",
+      "metodo": "POST",
+      "caminho": "/ai/augment-image",
+      "resposta": "zip",
+      "descricao_pt": "As seis ferramentas de direcao sobre uma imagem pronta.",
+      "verificado": false
+    },
+    "codificar_vibe": {
+      "base": "imagem",
+      "metodo": "POST",
+      "caminho": "/ai/encode-vibe",
+      "resposta": "binario",
+      "descricao_pt": "Codifica uma imagem para o Vibe Transfer. Custa 2 Anlas, uma vez so por imagem.",
+      "verificado": false
+    },
+    "assinatura": {
+      "base": "conta",
+      "metodo": "GET",
+      "caminho": "/user/subscription",
+      "resposta": "json",
+      "descricao_pt": "Le o plano e o saldo de Anlas da conta. E a chamada mais barata para testar se o token funciona.",
+      "verificado": false
+    }
+  },
+
+  "cabecalhos": {
+    "autorizacao": "Authorization",
+    "prefixo_do_token": "Bearer ",
+    "tipo_de_conteudo": "application/json",
+    "agente": "OficinaDeImagem/1.0 (uso pessoal, uma geracao por vez)"
+  },
+
+  "modelos": {
+    "v4_5_full": {
+      "nome_na_api": "nai-diffusion-4-5-full",
+      "nome_pt": "V4.5 Full",
+      "padrao": true,
+      "verificado": false
+    },
+    "v4_5_curated": {
+      "nome_na_api": "nai-diffusion-4-5-curated",
+      "nome_pt": "V4.5 Curated",
+      "padrao": false,
+      "verificado": false
+    },
+    "v4_full": {
+      "nome_na_api": "nai-diffusion-4-full",
+      "nome_pt": "V4 Full",
+      "padrao": false,
+      "verificado": false
+    },
+    "v4_curated": {
+      "nome_na_api": "nai-diffusion-4-curated-preview",
+      "nome_pt": "V4 Curated",
+      "padrao": false,
+      "verificado": false
+    },
+    "anime_v3": {
+      "nome_na_api": "nai-diffusion-3",
+      "nome_pt": "Anime V3",
+      "padrao": false,
+      "verificado": false
+    },
+    "furry_v3": {
+      "nome_na_api": "nai-diffusion-furry-3",
+      "nome_pt": "Furry V3",
+      "padrao": false,
+      "verificado": false
+    }
+  },
+
+  "acoes_de_direcao": {
+    "lineart": { "nome_pt": "Line Art (so o traco)", "verificado": false },
+    "sketch": { "nome_pt": "Sketch (versao em rascunho)", "verificado": false },
+    "bg-removal": { "nome_pt": "Remove BG (recorta o fundo)", "verificado": false },
+    "declutter": { "nome_pt": "Declutter (limpa texto e sujeira visual)", "verificado": false },
+    "colorize": { "nome_pt": "Colorize (colore um traco)", "verificado": false },
+    "emotion": { "nome_pt": "Emotion (troca a expressao do rosto)", "verificado": false }
+  },
+
+  "parametros_padrao": {
+    "_nota": "Valores de partida da geracao. Nenhum deles foi confirmado em documentacao oficial.",
+    "params_version": 3,
+    "width": 832,
+    "height": 1216,
+    "scale": 5,
+    "sampler": "k_euler_ancestral",
+    "steps": 28,
+    "n_samples": 1,
+    "ucPreset": 0,
+    "qualityToggle": true,
+    "dynamic_thresholding": false,
+    "controlnet_strength": 1,
+    "legacy": false,
+    "add_original_image": true,
+    "cfg_rescale": 0,
+    "noise_schedule": "karras",
+    "legacy_v3_extend": false,
+    "verificado": false
+  },
+
+  "resolucoes_de_referencia": [
+    { "largura": 1024, "altura": 1536, "nome_pt": "em pe (retrato)" },
+    { "largura": 1472, "altura": 1472, "nome_pt": "quadrada" },
+    { "largura": 1536, "altura": 1024, "nome_pt": "deitada (paisagem)" }
+  ],
+
+  "limites": {
+    "uma_geracao_por_vez": true,
+    "motivo_pt": "A conta do NovelAI permite so uma geracao simultanea. Nao adianta disparar dez de uma vez.",
+    "segundos_de_espera": 180,
+    "tentativas_de_rede": 2,
+    "caracteres_por_texto": 120
+  },
+
+  "erros_conhecidos": {
+    "401": "O token nao foi aceito. Talvez voce tenha gerado um token novo no site — isso invalida o anterior na hora. Guarde o novo na oficina.",
+    "402": "A conta ficou sem Anlas para esta geracao. Nada foi gasto.",
+    "409": "Ja existe uma geracao acontecendo nesta conta. Espere ela terminar.",
+    "429": "O NovelAI pediu para esperar um pouco — chamadas demais em pouco tempo. Espere um minuto e tente de novo.",
+    "500": "O site do NovelAI respondeu com erro do lado deles. Nada foi gasto. Tente daqui a pouco.",
+    "502": "O site do NovelAI esta fora do ar neste momento. Tente daqui a pouco.",
+    "503": "O site do NovelAI esta fora do ar neste momento. Tente daqui a pouco.",
+    "504": "O NovelAI demorou demais para responder. Tente de novo."
+  }
+}
