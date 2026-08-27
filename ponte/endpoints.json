@@ -87,42 +87,96 @@
   },
 
   "modelos": {
+    "_nota": [
+      "O campo familia diz de que geracao o modelo e: v4.5, v4 ou v3.",
+      "Ele existe porque os modelos V4 e V4.5 recebem as caixas de personagem",
+      "numa estrutura propria (ver estrutura_das_caixas_de_personagem, abaixo),",
+      "e os modelos V3 nao tem essa estrutura nem essas caixas."
+    ],
     "v4_5_full": {
       "nome_na_api": "nai-diffusion-4-5-full",
       "nome_pt": "V4.5 Full",
+      "familia": "v4.5",
       "padrao": true,
       "verificado": false
     },
     "v4_5_curated": {
       "nome_na_api": "nai-diffusion-4-5-curated",
       "nome_pt": "V4.5 Curated",
+      "familia": "v4.5",
       "padrao": false,
       "verificado": false
     },
     "v4_full": {
       "nome_na_api": "nai-diffusion-4-full",
       "nome_pt": "V4 Full",
+      "familia": "v4",
       "padrao": false,
       "verificado": false
     },
     "v4_curated": {
       "nome_na_api": "nai-diffusion-4-curated-preview",
       "nome_pt": "V4 Curated",
+      "familia": "v4",
       "padrao": false,
       "verificado": false
     },
     "anime_v3": {
       "nome_na_api": "nai-diffusion-3",
       "nome_pt": "Anime V3",
+      "familia": "v3",
       "padrao": false,
       "verificado": false
     },
     "furry_v3": {
       "nome_na_api": "nai-diffusion-furry-3",
       "nome_pt": "Furry V3",
+      "familia": "v3",
       "padrao": false,
       "verificado": false
     }
+  },
+
+  "estrutura_das_caixas_de_personagem": {
+    "_nota": [
+      "A FORMA do pedaco do pedido onde os modelos V4 e V4.5 recebem as caixas de personagem.",
+      "Ela esta aqui, e nao dentro do programa, pelo mesmo motivo dos enderecos:",
+      "a documentacao oficial do NovelAI nao publica nada disto, entao pode mudar.",
+      "",
+      "O defeito que ela conserta (achado do critico em 21/08/2026): o pedido saia",
+      "so com characterPrompts, e sem esta estrutura as caixas de personagem NAO",
+      "chegavam ao NovelAI. A oficina anunciava o recurso, cobrava por ele, e",
+      "mandava o pedido sem o carregador. Os dois vao juntos agora.",
+      "",
+      "Modelo desta forma, com um personagem:",
+      "  v4_prompt = {caption: {base_caption: <prompt base>,",
+      "                         char_captions: [{char_caption: <caixa>, centers: [{x,y}]}]},",
+      "               use_coords: <sim/nao>, use_order: true}",
+      "  v4_negative_prompt = {caption: {base_caption: <conteudo indesejado>,",
+      "                                  char_captions: [{char_caption: <indesejado da caixa>, centers: [{x,y}]}]},",
+      "                        legacy_uc: false}"
+    ],
+    "usar_nas_familias": ["v4", "v4.5"],
+    "_nota_da_referencia_precisa": [
+      "Quais familias de modelo aceitam a Referencia Precisa (Character Reference",
+      "e Style Reference). O tutorial diz que ela so existe no V4.5.",
+      "",
+      "O defeito que esta linha conserta (achado testando a ponte de pe em",
+      "23/08/2026): a tela de custo ja sabia disto e cobrava 0, escrevendo 'ela",
+      "nao vai acontecer nesta geracao' — mas o corpo do pedido saia levando a",
+      "referencia assim mesmo, calado. A mesma oficina dizia as duas coisas na",
+      "mesma rodada, e o autor pagava a imagem para receber o desenho sem a",
+      "referencia dele.",
+      "",
+      "Se um dia o NovelAI levar a Referencia Precisa para outro modelo, o",
+      "conserto e aqui: acrescente a familia na lista. Nenhum programa muda."
+    ],
+    "familias_com_referencia_precisa": ["v4.5"],
+    "nome_do_campo": "v4_prompt",
+    "nome_do_campo_negativo": "v4_negative_prompt",
+    "use_order": true,
+    "legacy_uc": false,
+    "verificado": false
   },
 
   "acoes_de_direcao": {
@@ -134,8 +188,44 @@
     "emotion": { "nome_pt": "Emotion (troca a expressao do rosto)", "verificado": false }
   },
 
+  "presets_de_conteudo_indesejado": {
+    "_nota": [
+      "O NovelAI identifica cada preset de Conteudo Indesejado por um NUMERO no campo ucPreset.",
+      "A documentacao oficial nao publica esses numeros, entao eles estao marcados como nao verificados.",
+      "O que importa e que a escolha da tela CHEGA ate aqui. Antes de 21/08/2026 o valor era fixo em 0",
+      "e o seletor da tela nao mudava nada — o autor escolhia Pesado e recebia outro preset.",
+      "",
+      "CORRECAO DE 21/08/2026, achado do critico: dois numeros estavam trocados.",
+      "Estava escrito nenhum=2 e foco=3. Nos clientes de API que a comunidade usa",
+      "(a mesma NekoAI-API citada na secao 19.8 do tutorial) a ordem e:",
+      "  0 = Heavy (pesado), 1 = Light (leve), 2 = Human Focus (foco), 3 = None (nenhum).",
+      "Do jeito antigo, escolher 'Nenhum' aplicava o filtro de foco humano, e escolher",
+      "'foco' nao aplicava filtro nenhum. Erro de chute e esperado aqui; o problema era",
+      "o chute estar do lado que muda uma imagem paga."
+    ],
+    "verificado": false,
+    "por_id": {
+      "pesado": 0,
+      "leve": 1,
+      "foco": 2,
+      "nenhum": 3
+    },
+    "nome_pt_por_id": {
+      "pesado": "Pesado",
+      "leve": "Leve",
+      "foco": "Foco humano",
+      "nenhum": "Nenhum"
+    },
+    "aviso_pt": "Estimativa: o manual do NovelAI nao publica o numero de cada preset. Se a imagem evitar algo que voce nao pediu, e aqui.",
+    "conferir_assim_pt": "Na primeira geracao de verdade, olhe o que a imagem evitou desenhar. Se nao bater com o preset escolhido, o conserto e trocar os numeros em ponte/endpoints.json."
+  },
+
   "parametros_padrao": {
-    "_nota": "Valores de partida da geracao. Nenhum deles foi confirmado em documentacao oficial.",
+    "_nota": [
+      "Valores de PARTIDA da geracao. Nenhum deles foi confirmado em documentacao oficial.",
+      "Partida quer dizer: valem so quando a tela nao mandou o dela.",
+      "ucPreset e qualityToggle sao sobrescritos pelo que o autor escolheu na tela (ver novelai.py)."
+    ],
     "params_version": 3,
     "width": 832,
     "height": 1216,
@@ -145,6 +235,7 @@
     "n_samples": 1,
     "ucPreset": 0,
     "qualityToggle": true,
+    "use_coords": false,
     "dynamic_thresholding": false,
     "controlnet_strength": 1,
     "legacy": false,

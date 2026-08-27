@@ -1,15 +1,22 @@
-Esta pasta e sua.
-
-Tudo o que a Oficina de Imagem salva fica aqui dentro:
-  personagens  - as fichas dos seus personagens
-  prompts      - os prompts que voce montou
-  exemplos     - as imagens que voce soltou como exemplo de uma tag
-  referencias  - as imagens de referencia que voce usa
-  geradas      - as imagens geradas, uma pasta por dia
-
-Cada imagem gerada tem um arquivo .json do lado dela, com o prompt e a
-semente que a fizeram. Guarde os dois juntos: e o que permite refazer a
-mesma imagem meses depois.
-
-Esta pasta NAO vai para o repositorio do livro. Pode copiar, mover e
-guardar onde quiser.
+Esta pasta e sua.
+
+Tudo o que a Oficina de Imagem salva fica aqui dentro:
+  meus_personagens - as fichas dos seus personagens
+  prompts          - os prompts que você montou
+  exemplos         - as imagens que você soltou como exemplo de uma tag
+  referências      - as imagens de referência que você usa
+  geradas          - as imagens geradas, uma pasta por dia
+  config.json      - as suas preferências (plano, tema, ordem das tags)
+
+Em prompts você vai ver arquivos com data e hora no nome, tipo
+_rascunho_2026-08-21_160805.json. São copias do que você estava
+montando, guardadas sozinhas antes de cada troca. Servem para voltar
+atrás. As doze últimas ficam; as mais velhas somem.
+
+Cada imagem gerada tem um arquivo .json do lado dela, com o prompt e a
+semente que a fizeram. Guarde os dois juntos: e o que permite refazer a
+mesma imagem meses depois.
+
+NADA DO QUE VOCÊ SALVAR AQUI vai para o repositório do livro. Pode
+copiar, mover e guardar onde quiser. (Este aviso e o único arquivo da
+pasta que veio junto com a ferramenta, e não e trabalho seu.)

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-br">
+<head><meta charset="utf-8"><title>manual-novelai.html — reconstrução parcial (27/08/2026)</title></head>
+<body>
+<h1>⚠️ ISTO NÃO É O ARQUIVO ORIGINAL</h1>
+
+<p>O <code>manual-novelai.html</code> original — o tutorial que o autor leu e
+aprovou, montado a partir da documentação oficial do NovelAI, com seções
+numeradas §01 a §19.8 — sumiu do disco e de todo o histórico do git. Foi
+procurado por código no projeto inteiro em 27/08/2026 e não foi encontrado em
+lugar nenhum (ver <code>CONTRATO.md</code>, seção 1, e <code>FONTES.md</code>,
+abertura). Ninguém tem uma cópia dele.</p>
+
+<p>Este arquivo é uma <b>reconstrução parcial</b>, feita em 27/08/2026 (decisão
+D7 do autor, em <code>REFERENCIAS_COAUTOR_fafa8949.md</code>), a partir das
+páginas <b>hoje ao vivo</b> em <code>docs.novelai.net/en/image/*</code>. Ele
+não tem a mesma numeração de seções do original, não cobre tudo que o
+original cobria, e por decisão de direitos autorais <b>não copia parágrafo
+nenhum do site</b> — só o vocabulário de tags (palavras curtas e funcionais,
+não texto criativo) e fatos objetivos (números, nomes de recurso, sintaxe).
+Onde a fonte é uma frase inteira do site, isto está marcado como resumo, não
+como citação.</p>
+
+<h2>Como usar este arquivo</h2>
+
+<p>Para conferir se uma tag é "verificada" (apareceu na fonte oficial),
+procure a grafia exata dela, como palavra/frase inteira, nas listas abaixo.
+Achou: pode carregar <code>verificada: true</code>, com o <code>origem</code>
+citando a seção e a URL. Não achou: <b>isso não prova que a tag está
+errada</b> — pode ser que este arquivo simplesmente não cubra aquele
+pedaço do vocabulário (ver "O que ficou de fora", no fim). Tag não achada
+aqui continua com o carimbo que já tinha antes (nem promovida, nem
+rebaixada) — quem faz essa reconferência é o Construtor A, e o resultado de
+27/08/2026 está registrado no <code>FONTES.md</code>, seção 5.11.</p>
+
+<h2>Fontes usadas (todas em inglês, fetch de 27/08/2026)</h2>
+<ul>
+<li>docs.novelai.net/en/image/ (mapa do site)</li>
+<li>docs.novelai.net/en/image/tags</li>
+<li>docs.novelai.net/en/image/basics</li>
+<li>docs.novelai.net/en/image/models</li>
+<li>docs.novelai.net/en/image/strengthening-weakening</li>
+<li>docs.novelai.net/en/image/qualitytags</li>
+<li>docs.novelai.net/en/image/undesiredcontent</li>
+<li>docs.novelai.net/en/image/multiplecharacters</li>
+<li>docs.novelai.net/en/image/textrendering</li>
+<li>docs.novelai.net/en/image/tutorial-imgintro/</li>
+<li>docs.novelai.net/en/image/tutorial-charactercreation/</li>
+<li>docs.novelai.net/en/image/tutorial-artstyles/</li>
+<li>docs.novelai.net/en/image/vibetransfer</li>
+<li>docs.novelai.net/en/image/precisereference</li>
+<li>docs.novelai.net/en/image/directortools</li>
+<li>docs.novelai.net/en/image/promptmixing</li>
+<li>docs.novelai.net/en/image/controltools</li>
+<li>docs.novelai.net/en/image/editimagecanvas</li>
+<li>docs.novelai.net/en/subscription</li>
+</ul>
+
+<h2>Vocabulário de tags, por seção</h2>
+
+<h3>Quality tags (docs.novelai.net/en/image/tags)</h3>
+<p>best quality, amazing quality, great quality, normal quality, bad quality, worst quality</p>
+
+<h3>Aesthetic tags (idem)</h3>
+<p>masterpiece, top aesthetic, very aesthetic, aesthetic, displeasing, very displeasing</p>
+
+<h3>Complexity tags (idem)</h3>
+<p>low complexity, medium complexity, high complexity, ultra complexity</p>
+
+<h3>Year/dataset/alpha tags (idem)</h3>
+<p>year XXXX (ex.: year 2014), fur dataset, background dataset, transparent background, has alpha, alpha transparency</p>
+
+<h3>Named/renamed tags (idem)</h3>
+<p>peace sign, double peace, bar eyes, open \m/, neutral face, neco-arc eyes, square bikini, character image</p>
+
+<h3>Misc tags (idem)</h3>
+<p>location, depthness, attractive male, meta:novel era, meta:golden era, visual novel art, visual novel bg, visual novel cg, visual novel chibi, visual novel sprite</p>
+
+<h3>Framing (docs.novelai.net/en/image/basics)</h3>
+<p>atmospheric perspective, dutch angle, fisheye, panorama, vanishing point, perspective, pov, rotated, sideways, upside-down, from above, from behind, from below, full body, cowboy shot, upper body</p>
+
+<h3>Time/era (idem)</h3>
+<p>1990s (style), 1980s (style), 1800s, renaissance, rococo, retro</p>
+
+<h3>Object focus (idem)</h3>
+<p>animal focus, eye focus, cloud focus, vehicle focus, weapon focus, soft focus</p>
+<p><i>Nota: a grafia genérica "object focus" (que o acervo tem) NÃO foi encontrada
+nesta lista nem em nenhuma outra página consultada.</i></p>
+
+<h3>Subject count (idem)</h3>
+<p>1girl, 1boy, 1other</p>
+<p><i>Nota: consultado de novo, de propósito — "solo", "2girls", "3girls",
+"2boys", "2others", "multiple girls", "6+girls" NÃO aparecem na página
+"tags" nem em "basics". Isso é lacuna deste arquivo, não prova de que essas
+tags são erradas.</i></p>
+
+<h3>Undesired content — presets e tags de amostra (docs.novelai.net/en/image/undesiredcontent)</h3>
+<p>Presets por modelo: Heavy, Light, Furry Focus, Human Focus (V5/V4.5); Heavy, Light (V4); Heavy V3, Heavy V2, Light V2, Light V3, Human Focus V3 (V3/V2); Heavy UC, Light UC (Furry V3); Low Quality, Low Quality + Bad Anatomy (Curated/Full antigos); Bad Anatomy, Low Quality (Furry antigo).</p>
+<p>Tags de amostra citadas: chromatic aberration, worst quality, bad quality, jpeg artifacts, lowres, bad anatomy, bad hands, watermark, blurry, scan artifacts, artistic error, dithering, halftone, screentone, multiple views, logo, glowing eyes, mismatched pupils</p>
+
+<h3>Sufixos de qualidade por modelo (docs.novelai.net/en/image/qualitytags)</h3>
+<p>absurdres, rating:general — anexados automaticamente conforme o modelo, não digitados pelo autor.</p>
+
+<h3>Multi-character — prefixos e exemplos (docs.novelai.net/en/image/multiplecharacters)</h3>
+<p>Prefixos: source# (quem faz a ação), target# (quem recebe), mutual# (os dois juntos). Exemplos: source#pointing, target#pointing, source#hug, target#hug, mutual#hug, source#pointing at another. Limite de personagens: V5 até 22, V4/V4.5 até 6.</p>
+
+<h3>Text rendering (docs.novelai.net/en/image/textrendering)</h3>
+<p>Prefixo "Text: ". Tags: text, english text, speech bubble, no text. Limite de caracteres: V4/V4.5 118, V5 Curated 374, V5 Full 750.</p>
+
+<h3>Hair — comprimento (docs.novelai.net/en/image/tutorial-charactercreation)</h3>
+<p>very short hair, short hair, medium hair, long hair, very long hair, absurdly long hair, big hair, bald</p>
+
+<h3>Hair — penteado (idem)</h3>
+<p>bob cut, braid, french braid, ponytail, twintails, half updo, pompadour, afro, high ponytail, low ponytail, side ponytail, short ponytail, folded ponytail, braided ponytail, topknot, bangs, blunt bangs, hair between eyes, hair over eyes, hair over one eye, parted bangs, swept bangs, sidelocks, ahoge, huge ahoge, heart ahoge, antenna hair, hair pulled back, hair slicked back</p>
+
+<h3>Hair — textura (idem)</h3>
+<p>curly hair, messy hair, spiked hair, straight hair, wavy hair</p>
+
+<h3>Facial hair (idem)</h3>
+<p>facial hair, beard, goatee, mustache, stubble, sideburns</p>
+
+<h3>Hair — cor (idem)</h3>
+<p>black hair, blonde hair, platinum blonde hair, aqua hair, light blue hair, dark blue hair, blue hair, brown hair, light brown hair, green hair, dark green hair, light green hair, grey hair, orange hair, pink hair, purple hair, light purple hair, red hair, white hair, multicolored hair, colored inner hair, colored tips, gradient hair, rainbow hair, split-color hair, streaked hair, two-tone hair</p>
+
+<h3>Eyes — cor (idem)</h3>
+<p>aqua eyes, black eyes, blue eyes, brown eyes, green eyes, grey eyes, orange eyes, purple eyes, pink eyes, red eyes, white eyes, yellow eyes</p>
+
+<h3>Eyes — especiais (idem)</h3>
+<p>heterochromia, horizontal pupils, slit pupils, symbol-shaped pupils, star-shaped pupils, diamond-shaped pupils, flower-shaped pupils, heart-shaped pupils, mismatched pupils, black sclera, bags under eyes, flaming eyes, glowing eyes</p>
+
+<h3>Skin — tom (idem)</h3>
+<p>pale skin, tan, dark skin, very dark skin</p>
+<p><i>Nota: "dark-skinned female" e "dark-skinned male" (com hífen, forma composta) NÃO aparecem — só "dark skin" e "very dark skin".</i></p>
+
+<h3>Skin — cores fantásticas (idem)</h3>
+<p>colored skin, black skin, blue skin, green skin, grey skin, orange skin, pink skin, purple skin, red skin, white skin, yellow skin</p>
+
+<h3>Skin — detalhes (idem)</h3>
+<p>freckles, makeup, lipstick, mole under eye, mole under mouth, thick eyebrows, scar on face, facepaint</p>
+<p><i>Nota: "tattoo" NÃO aparece nesta página.</i></p>
+
+<h3>Body build — magro (idem)</h3>
+<p>skinny, ribs, slim legs, narrow waist</p>
+
+<h3>Body build — robusto (idem)</h3>
+<p>curvy, plump, fat, obese, belly, stomach, thick thighs, wide hips</p>
+
+<h3>Body build — atlético (idem)</h3>
+<p>toned, muscular, muscular female, muscular male, abs, obliques, biceps, pectorals</p>
+
+<h3>Body — altura (idem)</h3>
+<p>tall, tall female, petite</p>
+
+<h3>Chest (idem)</h3>
+<p>flat chest, small breasts, medium breasts, large breasts, huge breasts, gigantic breasts</p>
+
+<h3>Clothing — cabeça (idem)</h3>
+<p>baseball cap, crown, hair ribbon, helmet, beret, witch hat, blue headwear</p>
+<p><i>Nota: "hat" sozinho (sem "baseball cap") NÃO aparece.</i></p>
+
+<h3>Clothing — tronco (idem)</h3>
+<p>jacket, dress, dress shirt, tank top, blue cape, white shirt, long sleeves, corset, leather belt, leather pouch</p>
+<p><i>Nota: "robe", "blue robe", "blue jacket", "leather jacket" e "coat" NÃO aparecem nesta página (podem existir em outra parte do site não consultada).</i></p>
+
+<h3>Clothing — pernas (idem)</h3>
+<p>skirt, pants, pelvic curtain, shorts, short skirt, blue skirt, frilled skirt, black pantyhose</p>
+
+<h3>Clothing — calçado (idem)</h3>
+<p>boots, knee boots, brown gloves</p>
+<p><i>Nota: "black shoes" NÃO aparece.</i></p>
+
+<h3>Enquadramento (idem)</h3>
+<p>close-up, portrait, upper body, lower body, cowboy shot, feet out of frame, foot out of frame, full body, wide shot, very wide shot</p>
+
+<h3>Ângulo de câmera (idem)</h3>
+<p>dutch angle, facing viewer, from above, from behind, from below, from side, profile, sideways, upside-down, multiple views, zoom layer, reference sheet, expressions</p>
+<p><i>Nota: "turnaround" e "cropped shoulders" (do §19.2/§08 do manual antigo) NÃO aparecem nesta página — só "multiple views", "reference sheet" e "expressions" foram confirmadas.</i></p>
+
+<h3>Exemplo do tutorial de introdução (docs.novelai.net/en/image/tutorial-imgintro)</h3>
+<p>no humans, flower field, sunset, 1girl, messy hair, brown hair, green eyes, from side, school uniform, petals</p>
+<p><i>Este exemplo bate quase palavra por palavra com o §02 do manual antigo — é a evidência mais forte de que a estrutura básica do tutorial não mudou.</i></p>
+
+<h3>Art style — mídia tradicional (docs.novelai.net/en/image/tutorial-artstyles)</h3>
+<p>traditional media, faux traditional media, mixed media, unconventional media</p>
+
+<h3>Técnicas de mídia (idem)</h3>
+<p>acrylic paint (medium), ballpoint pen (medium), calligraphy brush (medium), colored pencil (medium), graphite (medium), ink (medium), marker (medium), millipen (medium), nib pen (medium), oil painting (medium), painting (medium), pastel (medium), pen (medium), watercolor (medium), watercolor pencil (medium)</p>
+
+<h3>Aparência digital (idem)</h3>
+<p>3d, blender (medium), ai-generated, ai-assisted, anime screencap, pixel art</p>
+
+<h3>Movimentos artísticos (idem)</h3>
+<p>abstract, surreal, art nouveau, impressionism, ligne claire, nihonga, ukiyo-e, realistic, photorealistic, retro artstyle</p>
+
+<h3>Técnica de traço (idem)</h3>
+<p>painterly, sketch, lineart, no lineart, jaggy lines, outline, vector trace, color trace, game cg, official art, shikishi, oekaki, tegaki</p>
+
+<h3>Tratamento de cor (idem)</h3>
+<p>anime coloring, colorful, dark, limited palette, partially colored, spot color, monochrome, greyscale, muted color, pale color, pastel colors, flat color, high contrast, sepia</p>
+
+<h3>Cor dominante (idem)</h3>
+<p>aqua theme, black theme, blue theme, brown theme, green theme, grey theme, orange theme, pink theme, purple theme, red theme, white theme, yellow theme</p>
+
+<h3>Efeitos especiais (idem)</h3>
+<p>backlighting, bloom, bokeh, chromatic aberration, depth of field, diffraction spikes, dithering, drop shadow, emphasis lines, speed lines, motion lines, glitch, halftone, lens flare, motion blur, soft focus</p>
+
+<h3>Pesos — sintaxe (docs.novelai.net/en/image/strengthening-weakening)</h3>
+<p>{tag} = ×1,05; {{tag}} = ×1,1025 (exemplo do site: {{{chibi}}}). [tag] = ÷1,05 (exemplo: [[[chibi]]]). Peso numérico: 1.5::rain, night ::, 0.5::coat ::. Peso negativo: -1::hat ::, -3::hat ::, -1::monochrome ::, -2.5::flat color ::, -6::simple illustration ::, -1::simple background ::.</p>
+
+<h3>Modelos e recursos (docs.novelai.net/en/image/models)</h3>
+<p>Modelos hoje publicados: NovelAI Diffusion V5 Full, V5 Curated, V4.5 Full, V4.5 Curated, V4 Full, V4 Curated, Anime V3, Furry V3 (mais V2 e V1 legados, citados no histórico). V5 acrescenta idiomas além do inglês e renderização de texto em japonês/chinês — isto é fato NOVO, não estava no manual antigo (que só ia até V4.5).</p>
+
+<h3>Vibe Transfer (docs.novelai.net/en/image/vibetransfer)</h3>
+<p>Custo: 2 Anlas por codificação, um valor fixo por imagem de referência (soma a cada uma acima de 4). Não lista explicitamente em quais modelos funciona — mesma lacuna que o manual antigo já tinha (ver FONTES.md, seção 5.5).</p>
+
+<h3>Precise Reference (docs.novelai.net/en/image/precisereference)</h3>
+<p>Só existe em modelos V4.5. Custo: 5 Anlas por imagem, mais por referência adicional.</p>
+
+<h3>Director Tools (docs.novelai.net/en/image/directortools)</h3>
+<p>Remove Background, Line Art, Sketch, Colorize, Emotion, Declutter. O Emotion funciona melhor sobre um rosto neutro, de anime, de frente.</p>
+
+<h3>Prompt Mixing (docs.novelai.net/en/image/promptmixing)</h3>
+<p>Sintaxe: cat|frog (mistura 50/50); Prompt1|Prompt2 :0.3 (força 0,1 a 100, aceita negativo).</p>
+
+<h3>Controles de Image2Image (docs.novelai.net/en/image/controltools)</h3>
+<p>Strength, Noise, Guidance, Steps.</p>
+
+<h3>Canvas — formatos de arquivo 3D (docs.novelai.net/en/image/editimagecanvas)</h3>
+<p>.glb, .gltf, .pmd, .pmx, .vrm — batem com os que já estavam em <code>acervo_regras.js</code>.</p>
+
+<h3>Assinatura (docs.novelai.net/en/subscription)</h3>
+<p>Paper (teste grátis, 30 imagens); Tablet 10 USD/mês; Scroll 15 USD/mês, 1.000 Anlas; Opus 25 USD/mês, 10.000 Anlas, geração grátis em condição (V4.5 ou anterior, tamanho normal, até 28 passos). <i>Nota: o valor da Tablet mudou de 10 para o que o briefing antigo chamava de outro número — ver FONTES.md, seção 5.2, que já marcava isso como não verificado.</i></p>
+
+<hr>
+
+<h2>O que ficou de fora desta reconstrução, e por quê</h2>
+
+<p>Isto não é uma lista de tudo que falta — é a lista do que se sabe, com
+certeza, que NÃO foi coberto:</p>
+
+<ol>
+<li><b>O armazém completo de cenário, ação, expressão e objeto/animal/veículo
+não existe nos documentos oficiais de forma alguma.</b> As páginas
+consultadas (inclusive a de criação de personagem) não têm gaveta de "lugar"
+(floresta, telhado, sala de aula), "ação" (sentar, correr, lutar), "expressão"
+(sorrir, chorar) ou substantivo de objeto/bicho/veículo/arma. Isso bate com o
+que o acervo já sabia: essas 102+15+497 tags do acervo sempre foram
+`verificada: false`, com origem "fora do manual" ou medição no Danbooru — e
+continuam assim. Este arquivo não muda esse fato, só confirma que ele
+continua verdadeiro na documentação de hoje.</li>
+
+<li><b>Páginas de mecânica que não afetam tag nenhuma não foram mineradas a
+fundo</b>: Seed, Steps & Guidance, Prompt Randomizer, Prompt Chunks, Strength
+and Noise, Inpaint, Enhance, Upscale, History, Advanced Sampling. Foram
+listadas no mapa do site, mas o conteúdo delas não foi extraído, porque D7
+pede reconferir TAGS — essas páginas não têm vocabulário de tag, só
+configuração de ferramenta.</li>
+
+<li><b>Cada extração foi feita por um modelo de IA lendo a página e listando
+o que viu — não é garantido que a lista de cada seção acima seja 100%
+completa mesmo para a própria página de origem.</b> Onde uma segunda
+consulta contradisse a primeira (ex.: "object focus", "solo", "year XXXX"),
+isto está anotado em itálico logo abaixo da lista.</li>
+
+<li><b>A numeração de seção do manual antigo (§01–§19.8), citada no campo
+`origem` das 382 tags antigas, não existe mais</b> — este arquivo não tenta
+recriá-la. Por isso a reconferência de 27/08/2026 usou casamento de palavra
+(a grafia da tag existe em algum lugar deste arquivo?), não casamento de
+seção.</li>
+</ol>
+
+<h2>O resultado da reconferência de 27/08/2026</h2>
+
+<p>Ver <code>FONTES.md</code>, seção 5.11, para os números completos e a
+lista das 36 tags antigas não reconfirmadas. Resumo: das 382 tags
+`verificada: true`, 346 bateram com este vocabulário reconstruído (continuam
+true); 36 não bateram (continuam true também — reconstrução parcial não é
+prova de erro, ver acima). Das 497 tags novas de 27/08 (rodada 1), 1 bateu —
+<code>nat_petals</code> ("petals") — e foi promovida a `verificada: true`. As
+outras 496 continuam false, porque o vocabulário oficial do NovelAI
+simplesmente não nomeia bicho, veículo, arma ou objeto — isso sempre foi
+domínio do Danbooru, nunca do manual.</p>
+
+</body>
+</html>

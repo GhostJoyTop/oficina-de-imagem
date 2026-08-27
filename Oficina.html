@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oficina de Imagem</title>
+<meta name="description" content="Painel que conduz a criação e a manipulação de imagens de personagens no NovelAI.">
+
+<!-- O ícone da aba, desenhado aqui dentro: um visor de câmera, em duas linhas.
+     Vai embutido no próprio endereço, e não é arquivo nenhum. Sem isso o
+     navegador pede um favicon.ico que não existe, e a oficina responde com
+     erro à toa. -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='5.5' width='27' height='21' rx='3' fill='none' stroke='%23c96a2e' stroke-width='3'/><rect x='9.5' y='11.5' width='13' height='9' rx='1.5' fill='none' stroke='%23c96a2e' stroke-width='2.5'/></svg>">
+
+<!--
+  OFICINA DE IMAGEM — a página
+  Dono deste arquivo: Construtor B.
+
+  Os arquivos de dados entram por <script src>, NUNCA por fetch. O motivo é
+  duro e vale registrar: o navegador bloqueia fetch em página aberta direto do
+  disco, e a oficina nasceria sem tag nenhuma. Por <script src> ela funciona
+  igual do disco e do servidor.
+
+  A ordem dos scripts importa: primeiro os dados, depois as peças que os leem,
+  e o painel por último, porque ele monta a tela com tudo já carregado.
+-->
+
+<link rel="stylesheet" href="interface/oficina.css">
+</head>
+<body>
+
+<!-- O primeiro alvo do Tab. Fica escondido acima da tela até receber o foco.
+     Sem ele, quem anda por teclado atravessava as 1.030 coisas clicáveis da
+     página antes de chegar ao módulo aberto. -->
+<a class="pular" href="#palco">Pular para o módulo aberto</a>
+
+<!-- ================= a fita do topo, com a lâmpada ================= -->
+<header class="fita">
+  <!-- É o <h1> da página, e é o único. A Oficina não tinha nenhum título de
+       nível um: para quem usa leitor de tela, a página começava sem nome. -->
+  <h1 class="marca">Oficina de Imagem</h1>
+
+  <span class="lampada" id="lampada" data-modo="vermelho" title="Descobrindo em que modo a oficina está…">
+    <span class="bolha" aria-hidden="true"></span>
+    <span id="lampada-texto">Conferindo…</span>
+  </span>
+
+  <span class="discreto" id="estado-salvo"></span>
+
+  <span class="espaco"></span>
+
+  <button type="button" id="btn-baixar" class="botao-p" title="Guarda num arquivo tudo que você montou">
+    Baixar meu trabalho
+  </button>
+  <button type="button" id="btn-tema" class="botao-p" title="Alterna entre tema claro, escuro e o do sistema">
+    Trocar o tema
+  </button>
+</header>
+
+<div class="corpo">
+
+  <!-- ================= coluna 1 — os módulos ================= -->
+  <nav class="menu" id="menu" aria-label="Os módulos da oficina">
+    <div class="grupo-titulo">Carregando…</div>
+  </nav>
+
+  <!-- ================= coluna 2 — o palco ================= -->
+  <!-- `tabindex="-1"` não põe o palco na ordem do Tab: ele só permite que o
+       programa mande o foco para cá ao trocar de módulo, para que o leitor
+       de tela anuncie o módulo novo em vez de continuar no menu. -->
+  <main class="palco" id="palco" tabindex="-1">
+
+    <div class="faixa-fixa" id="faixa-modo"></div>
+
+    <section id="mod-armazem" class="ativa" aria-label="Armazém de tags">
+      <div class="cabecalho-modulo">
+        <h2>Armazém de tags</h2>
+        <p class="carregando">Abrindo as gavetas…</p>
+      </div>
+    </section>
+
+    <section id="mod-compositor" aria-label="Compositor de cena"></section>
+    <section id="mod-atelie" aria-label="Ateliê de personagem"></section>
+    <section id="mod-retoque" aria-label="Mesa de retoque"></section>
+    <section id="mod-regua" aria-label="Régua de ordem"></section>
+    <section id="mod-recursos" aria-label="Sala de recursos"></section>
+    <section id="mod-album" aria-label="Álbum"></section>
+    <section id="mod-cofre" aria-label="Cofre e gasto"></section>
+
+    <noscript>
+      <div class="nota vermelha">
+        <span class="rot">O navegador está com o JavaScript desligado</span>
+        <p>
+          A Oficina é um programa que roda dentro do navegador, e sem JavaScript
+          ela não tem como montar nada. Ligue o JavaScript nas configurações do
+          navegador e abra esta página de novo.
+        </p>
+      </div>
+    </noscript>
+  </main>
+
+  <!-- ================= coluna 3 — a Bancada ================= -->
+  <aside class="bancada" id="bancada" aria-label="Bancada de prompt" tabindex="-1">
+    <h3>Bancada de prompt</h3>
+    <p class="carregando">Preparando…</p>
+  </aside>
+
+</div>
+
+<div class="torrada" id="torrada" role="status" aria-live="polite"></div>
+
+<!-- ===== os dados (dono: Construtor A) — sempre antes de quem os lê ===== -->
+<script src="dados/acervo_tags.js"></script>
+<script src="dados/acervo_regras.js"></script>
+<script src="dados/acervo_receitas.js"></script>
+
+<!-- ===== as peças da oficina (dono: Construtor B) ===== -->
+<script src="interface/esquemas.js"></script>
+<script src="interface/motor_prompt.js"></script>
+<script src="interface/ordenador.js"></script>
+<script src="interface/ponte_cliente.js"></script>
+<script src="interface/memoria.js"></script>
+<script src="interface/compositor.js"></script>
+<script src="interface/painel.js"></script>
+
+</body>
+</html>

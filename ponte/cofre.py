@@ -111,8 +111,8 @@ def guardar(token: str) -> None:
 
     if _SO_LIXO.search(token):
         raise ErroDoCofre(
-            "Esse texto tem espaco ou quebra de linha no meio, e um token do "
-            "NovelAI nao tem. Copie o token inteiro, de uma vez, e cole de novo."
+            "Esse texto tem espaço ou quebra de linha no meio, e um token do "
+            "NovelAI não tem. Copie o token inteiro, de uma vez, e cole de novo."
         )
 
     if len(token) < TAMANHO_MINIMO:
@@ -124,7 +124,7 @@ def guardar(token: str) -> None:
     if len(token) > TAMANHO_MAXIMO:
         raise ErroDoCofre(
             "Esse texto e longo demais para ser um token. Parece que veio uma "
-            "pagina inteira junto. Copie so o token."
+            "página inteira junto. Copie só o token."
         )
 
     caminho = caminho_do_cofre()
@@ -134,7 +134,7 @@ def guardar(token: str) -> None:
         caminho.parent.mkdir(parents=True, exist_ok=True)
     except OSError as erro:
         raise ErroDoCofre(
-            "Nao consegui criar a pasta do cofre em {}. "
+            "Não consegui criar a pasta do cofre em {}. "
             "O Windows recusou.".format(caminho.parent)
         ) from erro
 
@@ -149,7 +149,7 @@ def guardar(token: str) -> None:
             pass
     except OSError as erro:
         raise ErroDoCofre(
-            "Nao consegui gravar o token no cofre. O Windows recusou o arquivo {}.".format(caminho)
+            "Não consegui gravar o token no cofre. O Windows recusou o arquivo {}.".format(caminho)
         ) from erro
 
     # A variavel local morre aqui. Nenhuma copia fica em memoria global.
@@ -192,8 +192,8 @@ def apagar() -> bool:
         return True
     except OSError as erro:
         raise ErroDoCofre(
-            "Nao consegui apagar o arquivo do token em {}. "
-            "Voce pode apaga-lo a mao por essa pasta.".format(caminho)
+            "Não consegui apagar o arquivo do token em {}. "
+            "Você pode apaga-lo a mao por essa pasta.".format(caminho)
         ) from erro
 
 
@@ -234,7 +234,7 @@ def _autoteste() -> int:
         ("", "vazio"),
         ("   ", "so espaco"),
         ("curto", "curto demais"),
-        ("com espaco no meio do token que deveria falhar aqui", "tem espaco"),
+        ("com espaço no meio do token que deveria falhar aqui", "tem espaco"),
         ("a" * 5000, "longo demais"),
     ):
         try:
@@ -242,7 +242,7 @@ def _autoteste() -> int:
         except ErroDoCofre:
             pass
         else:
-            falhas.append("Aceitou um token invalido ({}).".format(motivo))
+            falhas.append("Aceitou um token inválido ({}).".format(motivo))
 
     estado = estado_para_a_tela()
     for chave in estado:
@@ -256,7 +256,7 @@ def _autoteste() -> int:
             print("  - {}".format(falha))
         return 1
 
-    print("Cofre OK: recusa colagem errada, e o estado da tela nao carrega o token.")
+    print("Cofre OK: recusa colagem errada, e o estado da tela não carrega o token.")
     return 0
 
 

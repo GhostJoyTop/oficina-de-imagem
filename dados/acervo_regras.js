@@ -1,6 +1,6 @@
 window.OFICINA_REGRAS =
 {
-  "versao_formato": "1.0.0",
+  "versao_formato": "1.2.1",
   "fonte": "manual-novelai.html (docs.novelai.net)",
   "gerado_em": "2026-08-21",
   "modelos": [
@@ -18,6 +18,15 @@ window.OFICINA_REGRAS =
         "vibe_transfer": true,
         "text_rendering": true
       },
+      "suporta_verificado": {
+        "multi_personagem": true,
+        "peso_numerico": true,
+        "peso_negativo": true,
+        "precise_reference": true,
+        "vibe_transfer": false,
+        "text_rendering": true
+      },
+      "vibe_transfer_verificado": false,
       "origem": "§16 Qual modelo escolher"
     },
     {
@@ -34,6 +43,15 @@ window.OFICINA_REGRAS =
         "vibe_transfer": true,
         "text_rendering": true
       },
+      "suporta_verificado": {
+        "multi_personagem": true,
+        "peso_numerico": true,
+        "peso_negativo": true,
+        "precise_reference": true,
+        "vibe_transfer": false,
+        "text_rendering": true
+      },
+      "vibe_transfer_verificado": false,
       "origem": "§16 Qual modelo escolher"
     },
     {
@@ -50,6 +68,15 @@ window.OFICINA_REGRAS =
         "vibe_transfer": true,
         "text_rendering": true
       },
+      "suporta_verificado": {
+        "multi_personagem": true,
+        "peso_numerico": true,
+        "peso_negativo": true,
+        "precise_reference": true,
+        "vibe_transfer": false,
+        "text_rendering": true
+      },
+      "vibe_transfer_verificado": false,
       "origem": "§16 Qual modelo escolher"
     },
     {
@@ -66,6 +93,15 @@ window.OFICINA_REGRAS =
         "vibe_transfer": true,
         "text_rendering": true
       },
+      "suporta_verificado": {
+        "multi_personagem": true,
+        "peso_numerico": true,
+        "peso_negativo": true,
+        "precise_reference": true,
+        "vibe_transfer": false,
+        "text_rendering": true
+      },
+      "vibe_transfer_verificado": false,
       "origem": "§16 Qual modelo escolher"
     },
     {
@@ -82,6 +118,15 @@ window.OFICINA_REGRAS =
         "vibe_transfer": true,
         "text_rendering": false
       },
+      "suporta_verificado": {
+        "multi_personagem": true,
+        "peso_numerico": true,
+        "peso_negativo": true,
+        "precise_reference": true,
+        "vibe_transfer": false,
+        "text_rendering": true
+      },
+      "vibe_transfer_verificado": false,
       "origem": "§16 Qual modelo escolher"
     },
     {
@@ -98,6 +143,15 @@ window.OFICINA_REGRAS =
         "vibe_transfer": true,
         "text_rendering": false
       },
+      "suporta_verificado": {
+        "multi_personagem": true,
+        "peso_numerico": true,
+        "peso_negativo": true,
+        "precise_reference": true,
+        "vibe_transfer": false,
+        "text_rendering": true
+      },
+      "vibe_transfer_verificado": false,
       "origem": "§16 Qual modelo escolher"
     }
   ],
@@ -121,9 +175,12 @@ window.OFICINA_REGRAS =
       "id": "duas_char_ref_misturam",
       "gravidade": "vermelha",
       "titulo": "Duas referências de personagem viram UM personagem só",
-      "explica": "Várias Character References se misturam num personagem só. Elas não geram dois personagens. Para dois personagens, use as caixas de vários personagens.",
-      "origem": "§08 tabela (custo soma se usar mais de uma referência) + briefing da sessão",
-      "verificado": true
+      "explica": "Várias Character References se misturam num personagem só. Elas não geram dois personagens. Para dois personagens, use as caixas de vários personagens. A Oficina trata isso como regra dura por decisão do autor. O manual do NovelAI não afirma isso: ele só diz que o custo soma quando há mais de uma referência.",
+      "origem": "briefing da sessão — o manual não trata disto. O §08 só diz que o custo soma quando há mais de uma referência; a palavra misturar não aparece no manual.",
+      "verificado": false,
+      "vale_mesmo_assim": "É decisão do autor, passada no briefing desta sessão. O alerta vermelho da tela continua valendo.",
+      "frase_para_tela": "A Oficina trata isso como regra dura por decisão do autor. O manual do NovelAI não afirma isso — ele só diz que o custo soma quando há mais de uma referência.",
+      "nao_diga": "Não escreva “limite oficial do NovelAI” sobre esta regra. O manual não a traz, e a palavra misturar não aparece nele. Use o campo frase_para_tela."
     },
     {
       "id": "peso_numerico_v4",
@@ -235,6 +292,15 @@ window.OFICINA_REGRAS =
       "titulo": "Peça de roupa sem cor sai diferente a cada tentativa",
       "explica": "Escreva a cor junto de cada peça: blue skirt, não só skirt. E descreva cabeça, tronco e pernas separadamente.",
       "origem": "§03 item 6"
+    },
+    {
+      "id": "vibe_em_modelo_nao_confirmado",
+      "gravidade": "amarela",
+      "titulo": "Vibe Transfer fora do V4.5: ninguém conferiu",
+      "explica": "O manual não diz em quais modelos o Vibe Transfer funciona. Neste modelo pode ser que ele não faça nada — e a codificação da imagem custa 2 Anlas (os créditos pagos do NovelAI) do mesmo jeito. Antes de um lote, faça o teste de 1 imagem.",
+      "quando": "há Vibe Transfer anexado e o modelo escolhido não é da família v4.5",
+      "verificado": false,
+      "origem": "lacuna do manual — o §16 não cita o Vibe Transfer na lista de recursos por modelo"
     }
   ],
   "ordens": {
@@ -261,124 +327,165 @@ window.OFICINA_REGRAS =
         "id": "assunto",
         "nome": "Assunto e contagem",
         "padrao_manual": 10,
-        "estilo_primeiro": 10
+        "estilo_primeiro": 10,
+        "porque_sobe": "é quem está na imagem, e o manual manda dizer isso primeiro",
+        "porque_desce": "é quem está na imagem, e o manual manda dizer isso primeiro"
       },
       {
         "id": "enquadramento",
         "nome": "Enquadramento",
         "padrao_manual": 20,
-        "estilo_primeiro": 20
+        "estilo_primeiro": 20,
+        "porque_sobe": "é o corte do quadro, e ele vem logo depois de quem está na imagem",
+        "porque_desce": "é o corte do quadro, e ele vem depois de quem está na imagem"
       },
       {
         "id": "foco",
         "nome": "Foco de objeto",
         "padrao_manual": 25,
-        "estilo_primeiro": 25
+        "estilo_primeiro": 25,
+        "porque_sobe": "diz qual objeto manda no quadro, e isso vem cedo",
+        "porque_desce": "diz qual objeto manda no quadro, e isso entra depois do enquadramento"
       },
       {
         "id": "angulo",
         "nome": "Ângulo de câmera",
         "padrao_manual": 30,
-        "estilo_primeiro": 30
+        "estilo_primeiro": 30,
+        "porque_sobe": "é de onde a câmera olha, e isso vem antes de descrever o personagem",
+        "porque_desce": "é de onde a câmera olha, e isso entra depois do enquadramento"
       },
       {
         "id": "cabelo",
         "nome": "Cabelo",
         "padrao_manual": 40,
-        "estilo_primeiro": 40
+        "estilo_primeiro": 40,
+        "porque_sobe": "o manual descreve o personagem de cima para baixo, e o cabelo abre a lista",
+        "porque_desce": "o manual descreve o personagem de cima para baixo, e o cabelo vem depois da câmera"
       },
       {
         "id": "olhos",
         "nome": "Olhos",
         "padrao_manual": 45,
-        "estilo_primeiro": 45
+        "estilo_primeiro": 45,
+        "porque_sobe": "os olhos vêm logo depois do cabelo, na ordem do manual",
+        "porque_desce": "os olhos vêm depois do cabelo, na ordem do manual"
       },
       {
         "id": "pele",
         "nome": "Pele e rosto",
         "padrao_manual": 50,
-        "estilo_primeiro": 50
+        "estilo_primeiro": 50,
+        "porque_sobe": "pele e rosto vêm depois dos olhos, na ordem do manual",
+        "porque_desce": "pele e rosto vêm depois dos olhos, na ordem do manual"
       },
       {
         "id": "corpo",
         "nome": "Corpo",
         "padrao_manual": 55,
-        "estilo_primeiro": 55
+        "estilo_primeiro": 55,
+        "porque_sobe": "o corpo fecha a descrição do personagem, antes da roupa",
+        "porque_desce": "o corpo vem depois do rosto e antes da roupa"
       },
       {
         "id": "roupa_cabeca",
         "nome": "Roupa da cabeça",
         "padrao_manual": 60,
-        "estilo_primeiro": 60
+        "estilo_primeiro": 60,
+        "porque_sobe": "a roupa entra por partes, e a cabeça é a primeira",
+        "porque_desce": "a roupa entra depois do corpo, e a cabeça é a primeira parte"
       },
       {
         "id": "roupa_tronco",
         "nome": "Roupa do tronco",
         "padrao_manual": 62,
-        "estilo_primeiro": 62
+        "estilo_primeiro": 62,
+        "porque_sobe": "o tronco é a segunda parte da roupa",
+        "porque_desce": "o tronco é a segunda parte da roupa, depois da cabeça"
       },
       {
         "id": "roupa_pernas",
         "nome": "Roupa das pernas",
         "padrao_manual": 64,
-        "estilo_primeiro": 64
+        "estilo_primeiro": 64,
+        "porque_sobe": "as pernas são a terceira parte da roupa",
+        "porque_desce": "as pernas são a terceira parte da roupa"
       },
       {
         "id": "roupa_calcado",
         "nome": "Calçado",
         "padrao_manual": 66,
-        "estilo_primeiro": 66
+        "estilo_primeiro": 66,
+        "porque_sobe": "o calçado é a quarta parte da roupa",
+        "porque_desce": "o calçado é a quarta parte da roupa"
       },
       {
         "id": "roupa_acessorio",
         "nome": "Acessório",
         "padrao_manual": 68,
-        "estilo_primeiro": 68
+        "estilo_primeiro": 68,
+        "porque_sobe": "o acessório fecha a roupa",
+        "porque_desce": "o acessório fecha a roupa, depois do calçado"
       },
       {
         "id": "pose",
         "nome": "Pose e ação",
         "padrao_manual": 70,
-        "estilo_primeiro": 70
+        "estilo_primeiro": 70,
+        "porque_sobe": "a pose vem depois de o personagem estar descrito",
+        "porque_desce": "a pose vem depois de o personagem estar descrito"
       },
       {
         "id": "cena",
         "nome": "Cena, lugar, luz e clima",
         "padrao_manual": 80,
-        "estilo_primeiro": 80
+        "estilo_primeiro": 80,
+        "porque_sobe": "o lugar entra depois do personagem, e antes do acabamento",
+        "porque_desce": "o lugar entra depois do personagem"
       },
       {
         "id": "epoca",
         "nome": "Época",
         "padrao_manual": 85,
-        "estilo_primeiro": 6
+        "estilo_primeiro": 6,
+        "porque_sobe": "neste modo a época vai na frente, junto do bloco de estilo",
+        "porque_desce": "no Padrão do manual a época entra perto do fim, junto do acabamento"
       },
       {
         "id": "estilo",
         "nome": "Estilo",
         "padrao_manual": 90,
-        "estilo_primeiro": 5
+        "estilo_primeiro": 5,
+        "porque_sobe": "é estilo, e tag de estilo muda a imagem inteira — neste modo ela vai na frente",
+        "porque_desce": "é estilo, e no Padrão do manual o bloco de estilo entra depois do personagem e da cena"
       },
       {
         "id": "efeitos",
         "nome": "Efeitos especiais",
         "padrao_manual": 95,
-        "estilo_primeiro": 8
+        "estilo_primeiro": 8,
+        "porque_sobe": "neste modo os efeitos sobem junto com o estilo",
+        "porque_desce": "efeito é acabamento, e acabamento entra no fim"
       },
       {
         "id": "qualidade",
         "nome": "Qualidade e estética",
         "padrao_manual": 98,
-        "estilo_primeiro": 98
+        "estilo_primeiro": 98,
+        "porque_sobe": "é etiqueta de qualidade, e o manual a põe por último",
+        "porque_desce": "é etiqueta de qualidade, e o manual a põe por último"
       },
       {
         "id": "texto",
         "nome": "Bloco de texto (Text:)",
         "padrao_manual": 999,
-        "estilo_primeiro": 999
+        "estilo_primeiro": 999,
+        "porque_sobe": "o bloco Text: é a última coisa do prompt, sempre",
+        "porque_desce": "o bloco Text: é a última coisa do prompt, sempre"
       }
     ],
-    "estabilidade": "Empate no mesmo balde mantém a ordem em que o autor escolheu. Dentro de um balde, a preferência é dele."
+    "estabilidade": "Empate no mesmo balde mantém a ordem em que você escolheu. Dentro de um balde, quem manda é você.",
+    "porque_como_usar": "Cada balde traz dois motivos, porque a mesma mudança tem explicações opostas. Tag que SOBE recebe porque_sobe; tag que DESCE recebe porque_desce. Colar um só texto nos dois casos faz a Régua se desmentir — foi o defeito que a rodada 2 deixou passar."
   },
   "pesos": {
     "chaves": {
@@ -429,7 +536,9 @@ window.OFICINA_REGRAS =
         "conteudo_literal": null,
         "verificado": false,
         "explica": "Nada é evitado automaticamente.",
-        "origem": "§06 (nome citado)"
+        "origem": "§06 (nome citado)",
+        "nome_no_site": "None",
+        "numero_estimado": true
       },
       {
         "id": "leve",
@@ -437,7 +546,9 @@ window.OFICINA_REGRAS =
         "conteudo_literal": null,
         "verificado": false,
         "explica": "Combate os defeitos mais comuns, sem apertar muito.",
-        "origem": "§06 (nome citado)"
+        "origem": "§06 (nome citado)",
+        "nome_no_site": "Light",
+        "numero_estimado": true
       },
       {
         "id": "pesado",
@@ -448,15 +559,19 @@ window.OFICINA_REGRAS =
         "contem_confirmado": [
           "chromatic aberration"
         ],
-        "origem": "§04 callout Atenção + §06"
+        "origem": "§04 callout Atenção + §06",
+        "nome_no_site": "Heavy",
+        "numero_estimado": true
       },
       {
         "id": "foco",
-        "nome": "Variações por foco",
+        "nome": "Foco humano (estimativa)",
         "conteudo_literal": null,
         "verificado": false,
-        "explica": "O manual cita que existem variações por foco, sem listar quais.",
-        "origem": "§06 (citado sem detalhe)"
+        "explica": "O manual só diz que existem \"variações por foco\", no plural, sem listar nenhuma. Nos programas que a comunidade usa, o preset com esse papel se chama Human Focus, e evita defeitos de gente. O nome aqui é estimativa: se a imagem evitar algo que você não pediu, é este seletor.",
+        "origem": "§06 cita \"variações por foco\" sem detalhe; o nome Human Focus vem dos clientes de API da comunidade, não do manual",
+        "nome_no_site": "Human Focus",
+        "numero_estimado": true
       }
     ],
     "preset_padrao": "O preset recomendado já vem ativado por padrão no site.",
@@ -464,7 +579,19 @@ window.OFICINA_REGRAS =
       "mãos malformadas",
       "marca d'água",
       "baixa resolução"
-    ]
+    ],
+    "campo_no_pedido": "preset_indesejado",
+    "tipo_do_campo": "o id do preset, em texto",
+    "nota_para_b": "Mande o id do preset (nenhum, leve, pesado, foco) no campo preset_indesejado. A ponte traduz o id para o número que o NovelAI usa. Não mande número, e não mande o id no campo ucPreset: ucPreset é o vocabulário do site e lá ele é número. A tabela mora em ponte\\endpoints.json, com verificado: false. Abaixo do seletor, mostre o campo nota_sob_seletor.",
+    "quem_traduz_o_numero": "ponte/novelai.py, função numero_do_preset, lendo ponte/endpoints.json",
+    "campo_texto_livre": "Além do preset, o autor pode escrever tags próprias na caixa de Conteúdo Indesejado. As duas coisas convivem: o preset é uma lista pronta, o texto é o acréscimo dele.",
+    "nota_sob_seletor": "O NovelAI identifica cada preset por um número, e o manual não publica esse número. Se a imagem evitar algo que você não pediu, é aqui.",
+    "aviso_numeros": {
+      "gravidade": "amarela",
+      "verificado": false,
+      "texto": "Os quatro números que a Oficina manda para o NovelAI são estimativa. Eles vivem em ponte\\endpoints.json, marcados como não verificados. Na primeira geração de verdade, olhe o que a imagem evitou e confira.",
+      "onde_ficam": "ponte\\endpoints.json › presets_de_conteudo_indesejado.por_id"
+    }
   },
   "multi_personagem": {
     "maximo": 6,
@@ -481,20 +608,27 @@ window.OFICINA_REGRAS =
       {
         "prefixo": "source#",
         "exemplo": "source#hug",
-        "explica": "Marca quem INICIA a ação."
+        "explica": "Marca quem INICIA a ação.",
+        "onde": "Vai dentro da caixa do personagem que inicia. No prompt base não faz nada."
       },
       {
         "prefixo": "target#",
         "exemplo": "target#hug",
-        "explica": "Marca quem RECEBE a ação."
+        "explica": "Marca quem RECEBE a ação.",
+        "onde": "Vai dentro da caixa do personagem que recebe. No prompt base não faz nada."
       },
       {
         "prefixo": "mutual#",
         "exemplo": "mutual#hug",
-        "explica": "Marca a ação que os dois fazem igual, como um abraço correspondido."
+        "explica": "Marca a ação que os dois fazem igual, como um abraço correspondido.",
+        "onde": "Vai dentro da caixa dos dois personagens. No prompt base não faz nada."
       }
     ],
-    "origem": "§07 Vários personagens juntos"
+    "origem": "§07 Vários personagens juntos",
+    "regra_lugar": "Os prefixos de ação só funcionam dentro de uma caixa de personagem. Soltos no prompt base eles viram texto morto: o autor copia, paga e não recebe a ação.",
+    "regra_lugar_para_tela": "Este prefixo só funciona dentro de uma caixa de personagem. Crie duas caixas na Bancada e ponha source#hug numa e target#hug na outra.",
+    "regra_contagem_espelho": "A cobrança vale nos dois sentidos. Contagem (1girl, 2girls) dentro da caixa é erro. girl ou boy no prompt base também é erro. Aviso que dispara no acerto ensina o autor a ignorar aviso.",
+    "origem_regra_lugar": "§07 — o manual só apresenta os prefixos dentro do modo de vários personagens, logo depois de “cada um com sua própria caixa de prompt”. Ele não escreve a proibição com estas palavras."
   },
   "referencias": {
     "resolucoes_nativas": [
@@ -671,7 +805,10 @@ window.OFICINA_REGRAS =
       "Se um texto curto não aparecer, desligue as Etiquetas de Qualidade — elas incluem no text por padrão.",
       "Repetir o texto também em linguagem natural, descrevendo a fala, aumenta a confiabilidade."
     ],
-    "origem": "§13 Texto e balões de fala"
+    "origem": "§13 Texto e balões de fala",
+    "quem_poe_o_prefixo": "O motor da tela (Motor.blocoTexto). Nenhum dado do acervo carrega o prefixo Text:. Se um dado já trouxesse o prefixo, ele sairia dobrado — Text: Text: — e a palavra acabaria desenhada dentro da imagem.",
+    "campo_no_pedido": "textos",
+    "tipo_do_campo": "lista de falas, cada uma sem o prefixo"
   },
   "atalhos": [
     {
@@ -737,7 +874,9 @@ window.OFICINA_REGRAS =
         "acumula": true,
         "explica": "Soma se você usar mais de uma referência.",
         "verificado": true,
-        "origem": "§08 tabela e §19.1"
+        "origem": "§08 tabela e §19.1",
+        "gratis_no_opus": false,
+        "nota_opus": "Continua custando 5 Anlas por imagem mesmo no plano Opus."
       },
       {
         "id": "style_reference",
@@ -747,7 +886,9 @@ window.OFICINA_REGRAS =
         "acumula": true,
         "explica": "Incluído no mesmo custo do Precise Reference.",
         "verificado": true,
-        "origem": "§08 tabela e §19.1"
+        "origem": "§08 tabela e §19.1",
+        "gratis_no_opus": false,
+        "nota_opus": "Continua custando 5 Anlas por imagem mesmo no plano Opus."
       },
       {
         "id": "vibe_transfer",
@@ -757,7 +898,9 @@ window.OFICINA_REGRAS =
         "acumula": false,
         "explica": "Custa 2 Anlas para codificar a imagem, uma vez. Depois fica em cache no navegador.",
         "verificado": true,
-        "origem": "§08 tabela"
+        "origem": "§08 tabela",
+        "gratis_no_opus": false,
+        "nota_opus": "Continua custando 2 Anlas por imagem codificada mesmo no plano Opus."
       },
       {
         "id": "image2image",
@@ -767,7 +910,9 @@ window.OFICINA_REGRAS =
         "acumula": false,
         "explica": "Sem custo extra além da geração.",
         "verificado": true,
-        "origem": "§19.1 diagrama"
+        "origem": "§19.1 diagrama",
+        "gratis_no_opus": true,
+        "nota_opus": "Não tem custo próprio: o custo é o da geração, que no Opus é zero dentro do limite."
       },
       {
         "id": "inpaint_focado_opus",
@@ -777,7 +922,9 @@ window.OFICINA_REGRAS =
         "acumula": false,
         "explica": "Para assinantes Opus, esse modo específico não gasta Anlas mesmo em imagens grandes.",
         "verificado": true,
-        "origem": "§10 callout Inpaint Focado"
+        "origem": "§10 callout Inpaint Focado",
+        "gratis_no_opus": true,
+        "nota_opus": "Este é o único item que o próprio manual declara gratuito para o assinante Opus."
       }
     ],
     "planos": {
@@ -792,7 +939,8 @@ window.OFICINA_REGRAS =
           "imagens_gratis": 30,
           "extra": null,
           "verificado": false,
-          "origem": "briefing da sessão — NÃO consta no manual-novelai.html"
+          "origem": "briefing da sessão — NÃO consta no manual-novelai.html",
+          "ressalva": "Neste plano toda geração consome Anlas, e as referências somam por cima."
         },
         {
           "id": "tablet",
@@ -802,7 +950,8 @@ window.OFICINA_REGRAS =
           "imagens_gratis": 0,
           "extra": null,
           "verificado": false,
-          "origem": "briefing da sessão — NÃO consta no manual-novelai.html"
+          "origem": "briefing da sessão — NÃO consta no manual-novelai.html",
+          "ressalva": "Neste plano toda geração consome Anlas, e as referências somam por cima."
         },
         {
           "id": "scroll",
@@ -812,7 +961,8 @@ window.OFICINA_REGRAS =
           "imagens_gratis": 0,
           "extra": null,
           "verificado": false,
-          "origem": "briefing da sessão — NÃO consta no manual-novelai.html"
+          "origem": "briefing da sessão — NÃO consta no manual-novelai.html",
+          "ressalva": "Neste plano toda geração consome Anlas, e as referências somam por cima."
         },
         {
           "id": "opus",
@@ -822,9 +972,46 @@ window.OFICINA_REGRAS =
           "imagens_gratis": 0,
           "extra": "Geração sem gastar Anlas em V4.5 ou inferior: uma por vez, tamanho normal, até 28 passos.",
           "verificado": false,
-          "origem": "briefing da sessão — NÃO consta no manual-novelai.html"
+          "origem": "briefing da sessão — NÃO consta no manual-novelai.html",
+          "ressalva": "No plano Opus a GERAÇÃO sai de graça (V4.5 ou inferior, tamanho normal, até 28 passos). A referência de personagem NÃO sai: continua custando 5 Anlas por imagem, e soma a cada quadro. Uma folha de mangá com 8 quadros e a referência do personagem em cada um são 40 Anlas."
         }
-      ]
+      ],
+      "seletor": {
+        "pergunta": "Qual é o seu plano no NovelAI?",
+        "explica": "A Oficina usa isso só para calcular o custo direito. Nada é enviado para lugar nenhum.",
+        "padrao": "nenhuma",
+        "opcoes": [
+          {
+            "id": "nenhuma",
+            "rotulo": "Nenhum — só vou copiar o prompt e colar no site",
+            "gera_de_graca": false
+          },
+          {
+            "id": "teste",
+            "rotulo": "Teste grátis (as 30 primeiras imagens)",
+            "gera_de_graca": false
+          },
+          {
+            "id": "tablet",
+            "rotulo": "Tablet (10 USD por mês)",
+            "gera_de_graca": false
+          },
+          {
+            "id": "scroll",
+            "rotulo": "Scroll (15 USD por mês)",
+            "gera_de_graca": false
+          },
+          {
+            "id": "opus",
+            "rotulo": "Opus (25 USD por mês) — geração normal sem gastar Anlas",
+            "gera_de_graca": true
+          }
+        ],
+        "campo_no_pedido": "assinatura",
+        "nota_para_b": "Este é o mesmo vocabulário que ponte/orcamento.py lê no campo assinatura do pedido. Mande o id escolhido em /api/custo e em /api/gerar, e guarde-o no config.",
+        "verificado": false,
+        "origem": "briefing da sessão — os preços NÃO constam no manual-novelai.html"
+      }
     },
     "limites": [
       {
@@ -862,7 +1049,10 @@ window.OFICINA_REGRAS =
         "verificado": true,
         "origem": "§01 Como o prompt funciona"
       }
-    ]
+    ],
+    "moeda_explica": "Anlas é a moeda de dentro do NovelAI: créditos que vêm com a assinatura e que cada geração consome. Não é dinheiro; é o saldo do mês.",
+    "moeda_primeira_vez": "Anlas (os créditos pagos do NovelAI — cada imagem consome um tanto)",
+    "nota_opus": "No plano Opus a GERAÇÃO sai de graça (V4.5 ou inferior, tamanho normal, até 28 passos). A referência de personagem NÃO sai: continua custando 5 Anlas por imagem, e soma a cada quadro. Uma folha de mangá com 8 quadros e a referência do personagem em cada um são 40 Anlas."
   },
   "api": {
     "token": {
@@ -872,7 +1062,10 @@ window.OFICINA_REGRAS =
         "Gerar um token novo invalida o anterior na hora.",
         "Depois de fechar a janela, o token não aparece de novo — copie e guarde antes.",
         "Ele vale como senha: quem tiver o seu token consegue gastar os seus Anlas."
-      ]
+      ],
+      "frase_pronta": "O token fica no site do NovelAI, no menu da sua conta, com o nome Token Persistente de API. Ele aparece uma vez só — copie antes de fechar a janela.",
+      "onde_por_extenso": "No site do NovelAI, no menu da sua conta (a mesma conta que você usa para gerar imagem).",
+      "explica_leigo": "Token é a senha que a sua conta do NovelAI dá a este programa. Quem tiver o seu token gasta os seus Anlas. Por isso ele nunca aparece de novo na tela depois de guardado."
     },
     "endpoints_publicados": false,
     "endpoints_nota": "A documentação oficial NÃO publica os endereços técnicos (endpoints) da geração de imagem. Ela só diz que o token serve para usar a API. Por isso a geração direta é a única parte da Oficina que pode quebrar por mudança do lado deles.",
@@ -922,6 +1115,267 @@ window.OFICINA_REGRAS =
       "texto": "Se a IA ignorar seu prompt de estilo, aumente o Prompt Guidance (Orientação) e o Strength juntos. Teste com 10 a 15 passos: já mostram para onde a imagem vai, e gastam menos.",
       "origem": "§19.3 callout"
     }
-  ]
+  ],
+  "glossario": [
+    {
+      "id": "anlas",
+      "termo": "Anlas",
+      "de": "novelai",
+      "curto": "os créditos pagos do NovelAI",
+      "primeira_vez": "Anlas (os créditos pagos do NovelAI — cada imagem consome um tanto)",
+      "explica": "É a moeda de dentro do NovelAI. Você recebe uma quantidade por mês junto com a assinatura, e cada geração ou recurso extra consome um tanto. Quando acaba, para de gerar até o mês virar ou você comprar mais.",
+      "verificado": true,
+      "origem": "§08 tabela de custo (o manual usa a palavra, mas não a define)"
+    },
+    {
+      "id": "token",
+      "termo": "token",
+      "de": "novelai",
+      "curto": "a senha que a sua conta do NovelAI dá a este programa",
+      "primeira_vez": "token (a senha que a sua conta do NovelAI dá a este programa)",
+      "explica": "É uma senha comprida que o site do NovelAI gera para um programa usar a conta no seu lugar. Quem tiver o seu token gasta os seus Anlas. Por isso ele fica guardado fora da pasta do livro e nunca aparece na tela de novo.",
+      "verificado": true,
+      "origem": "§19.8 Token Persistente de API"
+    },
+    {
+      "id": "ponte",
+      "termo": "a ponte",
+      "de": "oficina",
+      "curto": "o programinha da janela preta, que salva no seu disco",
+      "primeira_vez": "a ponte (o programinha da janela preta, que salva no seu disco)",
+      "explica": "É a parte da Oficina que roda fora do navegador, na janela preta. É ela que grava o seu trabalho em arquivo e, se houver token, conversa com o NovelAI. Fechar a janela preta desliga a ponte.",
+      "verificado": false,
+      "origem": "vocabulário da própria Oficina — não é termo do NovelAI"
+    },
+    {
+      "id": "prompt",
+      "termo": "prompt",
+      "de": "novelai",
+      "curto": "a lista de palavras que descreve a imagem que você quer",
+      "primeira_vez": "prompt (a lista de palavras que descreve a imagem que você quer)",
+      "explica": "É o texto que você entrega ao NovelAI. Aqui ele é montado por você clicando nas tags, e a Oficina cuida da ordem.",
+      "verificado": true,
+      "origem": "§01 Como o prompt funciona"
+    },
+    {
+      "id": "tag",
+      "termo": "tag",
+      "de": "novelai",
+      "curto": "cada palavra-chave do prompt, em inglês",
+      "primeira_vez": "tag (cada palavra-chave do prompt, em inglês)",
+      "explica": "É uma palavra ou expressão que o modelo aprendeu, como close-up ou blue skirt. As tags ficam em inglês porque é o que a máquina entende; a tradução e a explicação aparecem ao lado.",
+      "verificado": true,
+      "origem": "§01 e §18 Armazém de tags"
+    },
+    {
+      "id": "conteudo_indesejado",
+      "termo": "Conteúdo Indesejado",
+      "de": "novelai",
+      "curto": "a caixa do que você NÃO quer na imagem",
+      "primeira_vez": "Conteúdo Indesejado (a caixa do que você NÃO quer na imagem)",
+      "explica": "É uma segunda caixa de texto. O que você escreve lá, a IA tenta evitar. O site tem listas prontas (presets) para os defeitos mais comuns.",
+      "verificado": true,
+      "origem": "§06 Conteúdo Indesejado"
+    },
+    {
+      "id": "semente",
+      "termo": "Semente (Seed)",
+      "de": "novelai",
+      "curto": "o número do sorteio que gerou aquela imagem",
+      "primeira_vez": "Semente (o número do sorteio que gerou aquela imagem — repetindo o número, você chega perto da mesma imagem)",
+      "explica": "Cada geração começa de um número sorteado. Repetindo o mesmo número com o mesmo prompt, você chega perto da mesma imagem. É assim que se comparam duas tentativas mudando só uma tag.",
+      "verificado": true,
+      "origem": "§03 callout Como comparar suas próprias tentativas"
+    },
+    {
+      "id": "passos",
+      "termo": "passos (steps)",
+      "de": "novelai",
+      "curto": "quantas vezes a IA refina a imagem antes de entregar",
+      "primeira_vez": "passos (quantas vezes a IA refina a imagem antes de entregar)",
+      "explica": "Mais passos, mais acabamento e mais custo. O manual recomenda testar com 10 a 15 passos, que já mostram para onde a imagem está indo e gastam menos.",
+      "verificado": true,
+      "origem": "§19.3 callout Se a IA ignorar seu prompt de estilo"
+    },
+    {
+      "id": "etiquetas_qualidade",
+      "termo": "Etiquetas de Qualidade",
+      "de": "novelai",
+      "curto": "um interruptor do site que acrescenta tags de acabamento sozinho",
+      "primeira_vez": "Etiquetas de Qualidade (um interruptor do site que acrescenta tags de acabamento sozinho)",
+      "explica": "Ligado, ele junta ao seu prompt tags como best quality. Isso melhora o acabamento, mas empurra tudo para o anime bonitinho padrão e inclui no text, que briga com texto escrito na imagem.",
+      "verificado": true,
+      "origem": "§13 e §04"
+    },
+    {
+      "id": "modelo",
+      "termo": "modelo",
+      "de": "novelai",
+      "curto": "a versão da IA que desenha",
+      "primeira_vez": "modelo (a versão da IA que desenha)",
+      "explica": "Cada versão sabe coisas diferentes. O V4.5 Full é o mais novo e o único com Precise Reference e peso negativo. O que você escolhe aqui muda quais recursos existem.",
+      "verificado": true,
+      "origem": "§17 Modelos"
+    },
+    {
+      "id": "precise_reference",
+      "termo": "Precise Reference",
+      "de": "novelai",
+      "curto": "anexar uma imagem para copiar o personagem ou o estilo dela",
+      "primeira_vez": "Precise Reference (anexar uma imagem para copiar o personagem ou o estilo dela)",
+      "explica": "São duas coisas na mesma ferramenta: Character Reference copia quem está na imagem, e Style Reference copia só o acabamento visual. Custa 5 Anlas por imagem e só existe no V4.5.",
+      "verificado": true,
+      "origem": "§08 Reaproveitar arte que já existe"
+    },
+    {
+      "id": "vibe_transfer",
+      "termo": "Vibe Transfer",
+      "de": "novelai",
+      "curto": "anexar uma imagem para pegar o clima geral dela",
+      "primeira_vez": "Vibe Transfer (anexar uma imagem para pegar o clima geral dela — cor, luz, atmosfera)",
+      "explica": "Copia cor, clima e composição de um jeito mais solto que o Style Reference. Custa 2 Anlas para codificar cada imagem, uma vez só.",
+      "verificado": true,
+      "origem": "§08 tabela"
+    },
+    {
+      "id": "image2image",
+      "termo": "Image2Image",
+      "de": "novelai",
+      "curto": "partir de uma imagem sua em vez da folha em branco",
+      "primeira_vez": "Image2Image (partir de uma imagem sua em vez da folha em branco)",
+      "explica": "Você entrega uma imagem e a IA a redesenha seguindo o seu prompt. A Força decide o quanto ela pode mudar.",
+      "verificado": true,
+      "origem": "§09 Partir de uma imagem"
+    },
+    {
+      "id": "inpaint",
+      "termo": "Inpaint",
+      "de": "novelai",
+      "curto": "refazer só um pedaço da imagem, marcado com o pincel",
+      "primeira_vez": "Inpaint (refazer só um pedaço da imagem, marcado com o pincel)",
+      "explica": "Você marca com o pincel a parte errada — uma mão torta, por exemplo — e só aquela região é refeita. O Inpaint Focado amplia a região antes, para sair com mais detalhe.",
+      "verificado": true,
+      "origem": "§10 Inpaint"
+    },
+    {
+      "id": "director_tools",
+      "termo": "Director Tools",
+      "de": "novelai",
+      "curto": "seis consertos prontos que agem sobre uma imagem",
+      "primeira_vez": "Director Tools (seis consertos prontos que agem sobre uma imagem)",
+      "explica": "São ferramentas de um clique: tirar o fundo, virar traço, virar rascunho, colorir, trocar a emoção do rosto e limpar sujeira. Não usam prompt inteiro.",
+      "verificado": true,
+      "origem": "§11 Director Tools"
+    },
+    {
+      "id": "text_rendering",
+      "termo": "Text Rendering",
+      "de": "novelai",
+      "curto": "escrever uma frase dentro da imagem",
+      "primeira_vez": "Text Rendering (escrever uma frase dentro da imagem)",
+      "explica": "Só funciona no V4 ou mais novo. A frase vai no fim absoluto do prompt, no formato Text: sua frase aqui, com até 120 caracteres por frase.",
+      "verificado": true,
+      "origem": "§13 Texto e balões de fala"
+    },
+    {
+      "id": "forca",
+      "termo": "Força (Strength)",
+      "de": "novelai",
+      "curto": "o quanto a IA pode mudar a sua imagem de partida",
+      "primeira_vez": "Força (o quanto a IA pode mudar a sua imagem de partida)",
+      "explica": "Força baixa mantém quase tudo. Força alta reinterpreta livremente — e, numa referência de personagem, copia também a pose e o ângulo dela.",
+      "verificado": true,
+      "origem": "§09 e §19.4"
+    },
+    {
+      "id": "ruido",
+      "termo": "Ruído (Noise)",
+      "de": "novelai",
+      "curto": "o quanto a IA pode inventar detalhe que não existia",
+      "primeira_vez": "Ruído (o quanto a IA pode inventar detalhe que não existia)",
+      "explica": "Ajuda a preencher um fundo que não havia. Ruído demais estraga a imagem quando você repete a geração várias vezes.",
+      "verificado": true,
+      "origem": "§09 Partir de uma imagem"
+    },
+    {
+      "id": "orientacao",
+      "termo": "Orientação (Prompt Guidance)",
+      "de": "novelai",
+      "curto": "o quanto a IA obedece ao seu prompt",
+      "primeira_vez": "Orientação (o quanto a IA obedece ao seu prompt)",
+      "explica": "Se a IA está ignorando o estilo que você pediu, o manual manda aumentar a Orientação e a Força juntas.",
+      "verificado": true,
+      "origem": "§19.3 callout"
+    },
+    {
+      "id": "canvas",
+      "termo": "Canvas",
+      "de": "novelai",
+      "curto": "a mesa de desenho do site, com boneco 3D para pose",
+      "primeira_vez": "Canvas (a mesa de desenho do site, com um boneco 3D para montar a pose)",
+      "explica": "É uma área de edição dentro do site do NovelAI. Nela existe um boneco 3D que você dobra para definir a pose exata. Essa parte não existe aqui na Oficina — é feita lá.",
+      "verificado": true,
+      "origem": "§12 Canvas"
+    },
+    {
+      "id": "prompt_chunk",
+      "termo": "Prompt Chunk",
+      "de": "novelai",
+      "curto": "um pedaço de prompt salvo para reusar",
+      "primeira_vez": "Prompt Chunk (um pedaço de prompt salvo para reusar, chamado com @)",
+      "explica": "Guarda um personagem inteiro ou uma paleta de estilo na sua conta do NovelAI. Você digita @ na caixa de prompt e ele volta pronto.",
+      "verificado": true,
+      "origem": "§14 Atalhos de quem gera muito"
+    },
+    {
+      "id": "api",
+      "termo": "API",
+      "de": "novelai",
+      "curto": "o jeito de um programa falar com o NovelAI sem abrir o site",
+      "primeira_vez": "API (o jeito de um programa falar com o NovelAI sem abrir o site)",
+      "explica": "É o que permite a Oficina gerar aqui dentro. Precisa do token. Os endereços técnicos dela não são publicados oficialmente, por isso essa parte pode quebrar e é sempre um extra.",
+      "verificado": true,
+      "origem": "§19.8 Fazer isso pela API"
+    }
+  ],
+  "glossario_como_usar": "Na PRIMEIRA vez que um termo aparece em cada tela, cole o campo primeira_vez inteiro, com os parênteses. Depois disso, na mesma tela, use só o termo. Termos com de=\"oficina\" são vocabulário nosso e não existem no NovelAI.",
+  "mudou_em": "2026-08-23 (rodada 2 da crítica): a regra das duas referências de personagem deixou de ser apresentada como limite oficial do NovelAI, e os prefixos de ação passaram a dizer ONDE funcionam, não só o que marcam.",
+  "etiquetas_qualidade": {
+    "nome": "Etiquetas de Qualidade",
+    "primeira_vez": "Etiquetas de Qualidade (um interruptor do site que acrescenta tags de acabamento sozinho)",
+    "explica": "É um interruptor do NovelAI. Ligado, ele junta ao seu prompt um punhado de tags de acabamento, como best quality. Desligado, só vai o que você escolheu.",
+    "padrao_no_site": true,
+    "campo_no_pedido": "etiquetas_de_qualidade",
+    "tipo_do_campo": "sim/não",
+    "contem_no_text": true,
+    "avisos": [
+      {
+        "id": "briga_com_texto",
+        "quando": "você pediu texto dentro da imagem (bloco Text:)",
+        "texto": "As Etiquetas de Qualidade incluem no text por padrão. Isso briga com a frase que você quer escrita na imagem. Se o texto curto não aparecer, desligue as Etiquetas de Qualidade.",
+        "gravidade": "amarela",
+        "verificado": true,
+        "origem": "§13"
+      },
+      {
+        "id": "briga_com_estilo",
+        "quando": "você está perseguindo um estilo (aquarela, ukiyo-e, pixel art, cinematográfico)",
+        "texto": "As Etiquetas de Qualidade empurram a imagem para o anime bonitinho padrão. Ao perseguir um estilo, desligue-as ou enfraqueça com colchetes.",
+        "gravidade": "amarela",
+        "verificado": true,
+        "origem": "§04 callout Atenção"
+      }
+    ],
+    "nota_para_b": "Este interruptor precisa existir na Bancada: hoje o aviso de briga com o texto está escrito no motor e nunca pode aparecer, porque nada liga a chave. Mande o valor no campo etiquetas_de_qualidade do pedido — a ponte já o lê.",
+    "verificado": true,
+    "origem": "§04 e §13"
+  },
+  "modelos_nota": {
+    "titulo": "O que a tabela de modelos garante, e o que ela supõe",
+    "verificado_explica": "Cada modelo traz um bloco suporta_verificado. Onde ele diz false, a linha sim/não é suposição nossa, não frase do manual. A tela precisa escrever 'sim (não verificado)' nessas colunas.",
+    "o_que_o_manual_diz": "O §16 diz: Multi-Character Prompting, Peso Numérico, Referência Precisa e Text Rendering só existem em V4 ou mais novos. O §08 diz que a Referência Precisa só funciona no V4.5. O §05 diz que peso negativo só funciona no V4.5+.",
+    "o_que_o_manual_nao_diz": "Em que modelos o Vibe Transfer funciona. A palavra Vibe Transfer aparece cinco vezes no manual e nenhuma delas fala de modelo. A Oficina marca sim nos seis porque o manual nunca o restringe — é inferência, e está declarada como tal.",
+    "origem": "§16, §08 e §05 para o que é afirmado; nada para o Vibe Transfer"
+  }
 }
 ;

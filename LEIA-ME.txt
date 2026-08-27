@@ -1,0 +1,263 @@
+===========================================================================
+  OFICINA DE IMAGEM
+  Como abrir, e o que fazer quando algo dá errado.
+===========================================================================
+
+
+COMO ABRIR
+-----------
+
+Dois cliques no arquivo   ABRIR A OFICINA.bat
+
+Mais nada. Você não precisa digitar comando nenhum, nem instalar nada.
+
+Uma janela preta abre e fica aberta. Logo depois o seu navegador abre sozinho
+na página da Oficina.
+
+
+A JANELA PRETA
+---------------
+
+Ela é a Oficina funcionando. O título dela diz:
+
+    OFICINA DE IMAGEM - nao feche esta janela
+
+Enquanto ela estiver aberta, a Oficina salva o seu trabalho no disco.
+Se você fechar essa janela, a Oficina desliga.
+
+PARA FECHAR A OFICINA quando terminar: feche a janela preta. Só isso.
+Não existe botão de "salvar" para você esquecer de clicar — cada mudança já é
+gravada na hora, sozinha.
+
+
+ONDE FICA O SEU TRABALHO
+-------------------------
+
+Nesta mesma pasta, dentro de   meu_trabalho
+
+    meus_personagens   as fichas dos seus personagens
+    prompts            os prompts que você montou
+    exemplos           as imagens que você soltou como exemplo de uma tag
+    referencias        as imagens de referência que você usa
+    geradas            as imagens geradas, uma pasta por dia
+    config.json        as suas preferências (plano, tema, ordem das tags)
+
+Cada imagem gerada tem um arquivo .json do lado dela, com o prompt e a semente
+(o número que faz a imagem sair igual) que a fizeram. Guarde os dois juntos:
+é o que permite refazer a mesma imagem daqui a meses.
+
+Em prompts você vai ver arquivos com data no nome, tipo
+_rascunho_2026-08-21_160800.json. São cópias do que você estava montando,
+guardadas sozinhas antes de cada troca. Elas existem para você poder voltar
+atrás se alguma coisa se perder. As doze últimas ficam; as mais velhas somem.
+
+Essa pasta é sua. Pode copiar, mover, mandar por e-mail. Nada do que você
+salvar ali vai para o repositório do livro.
+
+
+UMA OFICINA DE CADA VEZ
+------------------------
+
+Se você der dois cliques no atalho com a Oficina já aberta, ela NÃO abre uma
+segunda. A janela preta nova avisa que a Oficina já está de pé, abre o navegador
+na que existe, e espera você apertar uma tecla — só para dar tempo de ler. Essa
+janela nova pode ser fechada. A PRIMEIRA, não: é ela que segura a Oficina.
+
+Isso é de propósito. Duas Oficinas ao mesmo tempo atrapalham uma à outra: o seu
+álbum de imagens some da tela e a conta de gasto se divide em duas.
+
+
+===========================================================================
+  A OFICINA SEMPRE LIGADA (sem clicar toda vez)
+===========================================================================
+
+Por padrão, a Oficina só existe enquanto a janela preta estiver aberta — se
+você fecha a janela (de propósito ou sem querer), ela desliga, e a página no
+navegador para de responder.
+
+Se isso te incomoda, tem um segundo jeito de ligar, que resolve isso: a
+Oficina liga em segundo plano (sem nenhuma janela preta), fica sempre
+disponível, e se cair por algum erro, ela liga de novo sozinha em
+5 segundos, sem você precisar notar. Continua funcionando só neste
+computador — nada muda na parte de segurança.
+
+
+LIGAR ESSE MODO
+-----------------
+
+Dois cliques em   LIGAR A OFICINA SEMPRE - instalar.bat
+
+Ele faz duas coisas: liga a oficina agora mesmo, em segundo plano; e guarda
+um atalho na pasta de Inicialização do Windows, para ela ligar sozinha toda
+vez que você entrar no computador. Você não precisa mais clicar em nada,
+nem depois de reiniciar.
+
+
+USAR NO DIA A DIA
+-------------------
+
+Dois cliques em   ABRIR A OFICINA NO NAVEGADOR.url
+
+Isso abre o navegador direto no endereço da oficina. Guarde esse atalho nos
+favoritos ou na área de trabalho.
+
+
+DESLIGAR ESSE MODO
+---------------------
+
+Dois cliques em   DESLIGAR INICIO AUTOMATICO - desinstalar.bat
+
+Ele tira o atalho da Inicialização do Windows e desliga a cópia que estava
+rodando em segundo plano. Depois disso, use o jeito de sempre (a janela
+preta, com   ABRIR A OFICINA.bat  ) se quiser voltar a usar a oficina.
+
+
+SE ALGO DER ERRADO NESSE MODO
+--------------------------------
+
+Como não tem janela preta para mostrar mensagem, o que aconteceu fica
+escrito no arquivo   oficina_em_segundo_plano.log  , nesta mesma pasta. Abra
+com o Bloco de Notas — é so texto, com data e hora de cada tentativa.
+
+
+===========================================================================
+  QUANDO DÁ ERRADO
+===========================================================================
+
+
+A JANELA PRETA PISCA E SOME
+----------------------------
+
+Não deveria acontecer: a janela foi feita para ficar aberta com a mensagem do
+erro, justamente para você poder ler o que houve.
+
+Se mesmo assim ela sumir:
+
+  1. Dê dois cliques em   Oficina.html
+     A Oficina abre e funciona: as tags, as explicações, os desenhos, a ordem
+     das tags e o botão Copiar prompt. Você perde só o salvar no disco, e a
+     própria tela avisa isso com uma faixa amarela.
+
+     ESSA FAIXA AMARELA É ESPERADA, e não quer dizer que falta alguma coisa no
+     seu computador. Abrindo a Oficina assim, sem a janela preta, ela não tem
+     como gravar em disco — é só isso. Use o botão "Baixar meu trabalho" antes
+     de fechar a aba.
+
+  2. Reinicie o computador e tente o .bat de novo.
+
+
+O NAVEGADOR NÃO ABRE SOZINHO
+-----------------------------
+
+A janela preta mostra um endereço parecido com este:
+
+    http://127.0.0.1:8760/
+
+Abra o seu navegador e digite esse endereço na barra de cima.
+O número do fim pode ser outro — use o que estiver escrito na janela preta.
+
+
+A TELA DIZ QUE O ARQUIVO ESTÁ NA NUVEM DO ONEDRIVE
+---------------------------------------------------
+
+Esta pasta fica dentro do OneDrive, e o OneDrive às vezes guarda um arquivo na
+nuvem deixando só um atalho no disco. A primeira leitura pode demorar.
+
+Espere alguns segundos e tente de novo. Nada foi perdido.
+
+
+O WINDOWS DESCONFIA DO ARQUIVO .bat
+------------------------------------
+
+Pode acontecer com qualquer arquivo .bat novo. O nosso é texto puro, curto, e
+você pode lê-lo inteiro: clique com o botão direito em ABRIR A OFICINA.bat e
+escolha "Abrir com" > "Bloco de Notas".
+
+Ele não instala nada, não baixa nada e não muda nada no seu Windows. Ele só
+procura o Python e liga a Oficina.
+
+
+DIZ QUE NÃO ENCONTROU O PYTHON
+-------------------------------
+
+A Oficina abre assim mesmo, no modo simples, e a janela preta explica o que
+você perde. Continua funcionando: montar o prompt, ver as tags e as
+explicações, ordenar as tags, e copiar para colar no site do NovelAI.
+
+NÃO adianta clicar no atalho de novo — foi ele que abriu a Oficina assim, e o
+modo simples é o melhor que dá sem o Python neste computador. Nesse modo, use o
+botão "Baixar meu trabalho" antes de fechar a aba: sem o Python, nada é gravado
+no disco sozinho.
+
+
+===========================================================================
+  DUAS PALAVRAS QUE APARECEM O TEMPO TODO
+===========================================================================
+
+ANLAS são os créditos pagos do NovelAI. Cada imagem gerada consome um tanto
+deles. É a unidade que controla o seu dinheiro ali dentro: quando a tela diz
+"gastar 5 Anlas", está dizendo quanto do seu saldo aquela imagem come.
+
+TOKEN é a senha que a sua conta do NovelAI dá a este programa. Quem tem o seu
+token gasta os seus Anlas — por isso ele nunca fica nesta pasta.
+
+
+===========================================================================
+  SOBRE O TOKEN, E POR QUE ELE NÃO FICA NESTA PASTA
+===========================================================================
+
+A Oficina funciona inteira SEM token. Esse é o modo normal, e não é um modo
+menor: você monta o prompt aqui, clica em "Copiar prompt", e cola no site do
+NovelAI. A tela ainda mostra o que vai em cada caixa do site e qual modelo
+escolher.
+
+O token só serve para um extra: gerar a imagem aqui dentro, sem abrir o site.
+
+ONDE PEGAR O TOKEN, se um dia você quiser: no site do NovelAI, no menu da sua
+conta, com o nome "Token Persistente de API" (Persistent API Token). Ele
+aparece uma vez só — copie antes de fechar aquela janela. Gerar um token novo
+invalida o anterior na hora.
+
+QUANDO VOCÊ GUARDAR UM TOKEN, ele NÃO fica nesta pasta. Ele vai para:
+
+    C:\Users\<você>\AppData\Roaming\OficinaDeImagem\token.txt
+
+Três motivos, e o terceiro é o que importa:
+
+  1. Esta pasta está dentro do repositório do livro, que vai para a internet.
+  2. Esta pasta está dentro do OneDrive, que sincroniza com a nuvem.
+  3. Quem tem o seu token gasta os seus Anlas. Ele vale como uma senha.
+
+A Oficina nunca mostra o valor do token de volta na tela — nem em pedaço. Ela
+só diz "token guardado". Para tirá-lo, use o botão "apagar token", ou apague
+aquele arquivo à mão.
+
+
+A GERAÇÃO COMEÇA SEMPRE DESLIGADA
+----------------------------------
+
+Toda vez que a Oficina abre, ela começa no MODO ENSAIO. Nesse modo ela monta a
+chamada, mostra ela na tela e calcula o custo em Anlas — e não envia nada.
+Nenhum Anlas é gasto.
+
+Para gerar de verdade você precisa, de propósito: ligar a chave da geração ao
+vivo, e depois confirmar o custo daquela geração. Duas ações suas, não uma.
+
+Há ainda um teto de gasto, que você edita na tela: um limite de Anlas por
+sessão e outro por dia. Passou do teto, a Oficina para e explica.
+
+DIGA QUAL É O SEU PLANO na tela do Cofre e Gasto (nenhum, teste grátis, Tablet,
+Scroll ou Opus). A conta muda com ele: no plano Opus a geração de imagem de
+tamanho normal não gasta Anlas. Só que a imagem de REFERÊNCIA de personagem
+continua custando, mesmo no Opus — e ela soma a cada quadro de uma página de
+mangá. A Oficina mostra isso separado, linha por linha, antes de você confirmar.
+
+
+UM AVISO QUE VALE PARA O SITE DO NOVELAI
+-----------------------------------------
+
+O NovelAI não guarda nada. Recarregar a aba apaga a sessão inteira.
+
+Baixe cada imagem pelo botão de salvar do site. O botão direito do mouse NÃO
+guarda o prompt nem a semente dentro do arquivo — e sem eles você não refaz
+aquela imagem depois.

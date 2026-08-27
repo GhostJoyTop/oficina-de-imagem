@@ -1,0 +1,62 @@
+# O que NAO vai para o repositorio do livro.
+
+# 1. O trabalho do autor. As imagens, as fichas de personagem e os prompts sao
+#    dele, sao pesados, e nao tem nada que ver com o texto do livro.
+meu_trabalho/
+#
+#    UM PONTO SOLTO, PARA QUEM FOR COMMITAR (21/08/2026, apontado pelo critico):
+#    esta regra nao alcanca arquivo que JA foi commitado antes dela existir, e
+#    ha exatamente um assim:
+#        Ferramentas/Oficina_de_Imagem/meu_trabalho/LEIA-ME desta pasta.txt
+#    Ele entrou no commit anterior da ferramenta. Nao ha nada pessoal dentro
+#    dele (e um aviso que o proprio programa escreve), mas enquanto ele for
+#    acompanhado pelo git, a promessa que a ferramenta faz ao autor — "esta
+#    pasta nao vai para o repositorio do livro" — nao e inteiramente verdade.
+#
+#    O CONSERTO E UMA LINHA, e precisa da autorizacao do autor, porque mexe no
+#    repositorio:
+#        git rm --cached "Ferramentas/Oficina_de_Imagem/meu_trabalho/LEIA-ME desta pasta.txt"
+#    O arquivo continua no disco; so deixa de ser acompanhado pelo git.
+#
+#    O QUE JA FOI FEITO ENQUANTO ISSO, para o estrago ser o menor possivel:
+#      - o servidor so reescreve esse aviso quando o texto muda de verdade,
+#        entao abrir a oficina nao suja mais o repositorio;
+#      - a gravacao usa newline="" e nao produz mais "\r\r\n", que fazia o
+#        arquivo aparecer alterado sem ninguem ter mudado nada;
+#      - o texto do aviso deixou de prometer o que ainda nao e verdade: ele
+#        agora diz que nada do que o AUTOR salvar ali vai para o repositorio,
+#        que e exato — as cinco gavetas dele nunca foram acompanhadas.
+
+# 2. Lixo que o Python deixa ao rodar.
+__pycache__/
+*.pyc
+*.pyo
+
+# 3. Arquivo pela metade, se uma gravacao for interrompida no meio.
+*.novo
+
+# 3b. A trava de "uma geracao por vez" e as copias do rascunho. Os dois vivem
+#     dentro de meu_trabalho e ja estao cobertos pela regra 1; ficam escritos
+#     aqui para nao voltarem por engano se alguem mover essas pastas de lugar.
+_gerando.trava
+_rascunho_*.json
+
+# 4. Trava de seguranca, e ela e a mais importante deste arquivo.
+#    O token do NovelAI mora em %APPDATA%\OficinaDeImagem\token.txt, que fica
+#    FORA desta pasta e portanto fora do git de qualquer jeito. As linhas
+#    abaixo existem so para o caso de um arquivo com token aparecer aqui dentro
+#    por acidente. Quem tem o token gasta os Anlas do autor.
+token.txt
+*token*
+*.naiv4vibe
+
+# 5. Lixo do Windows e do OneDrive.
+Thumbs.db
+desktop.ini
+*.tmp
+*.lnk
+
+# 6. O registro da vigia silenciosa (modo "sempre ligada", sem janela).
+#    E so um historico de quando a oficina ligou e desligou sozinha em
+#    segundo plano — nao tem nada do trabalho do autor.
+oficina_em_segundo_plano.log

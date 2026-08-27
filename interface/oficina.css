@@ -8,6 +8,18 @@
    ========================================================================== */
 
 :root {
+  /* Diz ao navegador que esta página trata os dois temas por conta própria.
+
+     Sem esta linha o Chrome escurece sozinho o que ele acha que é claro
+     demais — e ele faz isso principalmente com botão, caixa de texto e
+     lista de escolha. Medido nesta oficina: no tema claro, o botão
+     "Copiar prompt" e as casas da grade de posição continuavam pintados
+     com a cor do tema escuro, enquanto o resto da tela clareava. As
+     variáveis estavam certas; quem trocava a cor por fora era o
+     navegador. `color-scheme` também acerta a barra de rolagem e os
+     controles nativos. */
+  color-scheme: light;
+
   --fundo:        #f5f2ec;
   --fundo-fita:   #ebe6dc;
   --painel:       #ffffff;
@@ -17,7 +29,16 @@
   --borda-forte:  #b5ad9c;
   --texto:        #1d1b17;
   --texto-2:      #5d574c;
-  --texto-3:      #857e70;
+  /* Medido, não escolhido a olho. O valor de antes (#857e70) dava 3,2:1 a 3,4:1
+     sobre os fundos claros da oficina — abaixo do mínimo de 4,5:1 que texto
+     miúdo exige. Era cinza sobre cinza, exatamente o que a planta proíbe.
+     E não caía em enfeite: caía nas linhas do glossário ("O token (a senha
+     que a sua conta do NovelAI dá a este programa)", "Anlas (os créditos
+     pagos...)"), que são as explicações de que ele mais precisa, e na conta
+     de tags de cada gaveta. Este valor dá de 4,7:1 a 5,9:1 sobre todos os
+     fundos claros, e continua mais apagado que --texto-2, então a hierarquia
+     visual não se perde. */
+  --texto-3:      #6b6459;
   --acento:       #9a4416;
   --acento-2:     #c96a2e;
   --acento-fraco: #f6e6da;
@@ -31,14 +52,36 @@
   --info-fraco:   #e2eef7;
   --sombra:       0 1px 2px rgba(0,0,0,.05), 0 6px 18px rgba(0,0,0,.05);
   --sombra-alta:  0 8px 34px rgba(0,0,0,.16);
+
+  /* TRÊS raios, e só três. Antes eram sete (10, 7, 6, 5, 4, 3 e 999px), e
+     quatro deles diferiam por um pixel — diferença que ninguém vê e que faz
+     a mesma tela parecer montada por duas pessoas. `--raio-pilula` é o
+     redondo total das pastilhas. */
   --raio:         10px;
-  --raio-p:       7px;
+  --raio-p:       6px;
+  --raio-mini:    4px;
+  --raio-pilula:  999px;
+
+  /* SEIS tamanhos de letra, e só seis. Antes eram quinze, sete deles
+     diferindo por MEIO PIXEL (13,5 contra 13; 12,5 contra 12; 11,5 contra
+     11). Meio pixel não é hierarquia: é ruído que o navegador arredonda
+     sozinho e de forma diferente em cada tela. A escala abaixo é a única
+     fonte de tamanho do arquivo. */
+  --t-xs:         12px;   /* selo, contador, legenda */
+  --t-sm:         13px;   /* texto de apoio */
+  --t-md:         14px;   /* botão, campo, tabela */
+  --t-base:       15px;   /* corpo */
+  --t-lg:         17px;   /* h3 */
+  --t-xl:         20px;   /* h2 */
+  --t-2xl:        24px;   /* h1 */
+
   --mono:         "Cascadia Mono", "Consolas", "SF Mono", ui-monospace, monospace;
   --sans:         "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --fundo:        #17161a;
     --fundo-fita:   #201f24;
     --painel:       #1f1e23;
@@ -48,7 +91,13 @@
     --borda-forte:  #55525c;
     --texto:        #ece9e3;
     --texto-2:      #b3ada3;
-    --texto-3:      #8a847a;
+    /* Mesmo conserto do tema claro, do outro lado. O valor de antes
+       (#8a847a) dava 3,8:1 a 4,0:1 sobre os fundos escuros — abaixo dos
+       4,5:1 que texto miudo exige. Este da de 4,9:1 a 5,4:1, e segue mais
+       apagado que --texto-2. Os dois blocos escuros levam o mesmo valor:
+       se um mudar sozinho, o tema do sistema e o tema escolhido a mao
+       passam a mostrar cores diferentes. */
+    --texto-3:      #a49d92;
     --acento:       #e0894f;
     --acento-2:     #f0a068;
     --acento-fraco: #38271c;
@@ -66,6 +115,7 @@
 }
 
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --fundo:        #17161a;
   --fundo-fita:   #201f24;
   --painel:       #1f1e23;
@@ -75,7 +125,12 @@
   --borda-forte:  #55525c;
   --texto:        #ece9e3;
   --texto-2:      #b3ada3;
-  --texto-3:      #8a847a;
+  /* Tem de ser IGUAL ao valor do bloco de cima, o do @media. São os dois
+     lugares onde o tema escuro existe: um vale quando o Windows está no
+     escuro, o outro quando ele escolhe escuro no botão. Um valor diferente
+     aqui faria a mesma tela mudar de cor conforme o caminho pelo qual o
+     escuro chegou — e ninguém acharia o motivo. */
+  --texto-3:      #a49d92;
   --acento:       #e0894f;
   --acento-2:     #f0a068;
   --acento-fraco: #38271c;
@@ -93,28 +148,75 @@
 
 * { box-sizing: border-box; }
 
+/* ⚠ `height: 100%` AQUI DESCOLAVA O CABEÇALHO DA TELA.
+
+   O <body> com altura travada em 100% da janela vira o bloco que segura
+   todo elemento `sticky` de dentro — e um elemento sticky nunca passa do
+   fim do bloco que o segura. Como a Oficina tem catorze mil pixels de
+   conteúdo dentro de um body de setecentos, a fita do topo grudava só
+   até 786px de rolagem e depois subia embora junto com o resto.
+
+   Medido: sumiam de vez a lâmpada de estado, o aviso "salvo no disco", o
+   "Baixar meu trabalho" e o "Trocar o tema" — e com eles o único lugar da
+   tela que diz se a oficina está funcionando. `min-height` dá o mesmo
+   piso de altura sem pôr teto nenhum. */
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
   background: var(--fundo);
   color: var(--texto);
   font-family: var(--sans);
-  font-size: 15.5px;
+  font-size: var(--t-base);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
 
+/* h1 era 20px e h2 era 22px: o título de nível um saía MENOR que o de
+   nível dois, então a hierarquia dizia o contrário do que a marcação
+   dizia. Hoje a escala desce, como a numeração promete. */
 h1, h2, h3, h4 { margin: 0 0 .4em; line-height: 1.25; font-weight: 700; }
-h1 { font-size: 20px; }
-h2 { font-size: 22px; letter-spacing: -.01em; }
-h3 { font-size: 17px; }
-h4 { font-size: 14.5px; color: var(--texto-2); text-transform: uppercase; letter-spacing: .06em; }
+h1 { font-size: var(--t-2xl); }
+h2 { font-size: var(--t-xl); letter-spacing: -.01em; }
+h3 { font-size: var(--t-lg); }
+h4 { font-size: var(--t-md); color: var(--texto-2); letter-spacing: .01em; }
 p  { margin: 0 0 .8em; }
 a  { color: var(--acento); }
+
+/* ---------- pular direto para o conteúdo ------------------------------
+   São 1.030 coisas clicáveis nesta página. Quem anda por teclado passava
+   por todas elas antes de chegar ao módulo aberto. Este atalho é o
+   primeiro alvo do Tab e fica invisível até receber o foco. */
+.pular {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  z-index: 100;
+  background: var(--acento);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: var(--raio-p);
+  font-size: var(--t-md);
+  font-weight: 600;
+  text-decoration: none;
+  /* Sem transição: o atalho aparece de uma vez. Deslizar aqui não explica
+     mudança nenhuma — é enfeite —, e enfeite que se move é justamente o
+     que esta tela não pode ter. Havia também um custo prático: enquanto a
+     página não estava desenhando quadros, a transição não avançava e o
+     atalho ficava preso fora da tela mesmo com o foco nele. */
+}
+.pular:focus { top: 8px; color: #fff; }
+:root[data-theme="dark"] .pular,
+:root[data-theme="dark"] .pular:focus { color: #1a1207; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .pular,
+  :root:not([data-theme="light"]) .pular:focus { color: #1a1207; }
+}
+.palco:focus { outline: none; }
+.palco:focus-visible { outline: 2px solid var(--acento); outline-offset: -2px; }
 
 /* ---------- fita do topo (a lâmpada) --------------------------------- */
 
@@ -131,10 +233,14 @@ a  { color: var(--acento); }
   border-bottom: 1px solid var(--borda);
 }
 
+/* É o <h1> da página — o único título de nível um que existia era nenhum.
+   A regra de tamanho de h1 fica de fora aqui de propósito: na fita ela é
+   uma marca, não um título de leitura. */
 .fita .marca {
+  margin: 0;
   font-weight: 800;
   letter-spacing: .1em;
-  font-size: 13px;
+  font-size: var(--t-sm);
   text-transform: uppercase;
   color: var(--acento);
   white-space: nowrap;
@@ -146,9 +252,9 @@ a  { color: var(--acento); }
   gap: 8px;
   padding: 4px 11px 4px 8px;
   border: 1px solid var(--borda);
-  border-radius: 999px;
+  border-radius: var(--raio-pilula);
   background: var(--painel);
-  font-size: 13px;
+  font-size: var(--t-sm);
   color: var(--texto-2);
   cursor: help;
 }
@@ -167,7 +273,7 @@ a  { color: var(--acento); }
 
 button, .botao {
   font: inherit;
-  font-size: 14px;
+  font-size: var(--t-md);
   color: var(--texto);
   background: var(--painel);
   border: 1px solid var(--borda-forte);
@@ -182,13 +288,34 @@ button:focus-visible, [tabindex]:focus-visible, input:focus-visible, textarea:fo
   outline: 2px solid var(--acento);
   outline-offset: 2px;
 }
+
+/* ⚠ O ANEL DE FOCO ERA RECORTADO PELA PRÓPRIA PEÇA.
+
+   Pastilha e gaveta cortam o que passa da borda (`overflow: hidden`), e o
+   anel de foco era desenhado DOIS PIXELS PARA FORA da peça — ou seja,
+   exatamente na faixa que estava sendo cortada. Quem anda por teclado
+   perdia o botão de vista dentro das 499 pastilhas.
+
+   O conserto é desenhar o anel para DENTRO (`outline-offset: -2px`), que
+   nenhum recorte alcança. Continua sendo `outline` de verdade, e não
+   sombra: no modo de alto contraste do Windows, sombra some e outline
+   não. */
+.bolinha-ler:focus-visible,
+.bolinha-por:focus-visible,
+.gaveta > summary:focus-visible,
+.escolhida .x:focus-visible,
+.mascara-tela:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: -2px;
+}
+
 button[disabled] { opacity: .45; cursor: not-allowed; }
 
 .botao-forte {
   background: var(--acento);
   border-color: var(--acento);
   color: #fff;
-  font-weight: 650;
+  font-weight: 600;
 }
 :root[data-theme="dark"] .botao-forte,
 :root:not([data-theme="light"]) .botao-forte { color: #1a1207; }
@@ -197,7 +324,7 @@ button[disabled] { opacity: .45; cursor: not-allowed; }
 }
 .botao-forte:hover { background: var(--acento-2); border-color: var(--acento-2); }
 
-.botao-p { padding: 3px 8px; font-size: 12.5px; }
+.botao-p { padding: 4px 9px; font-size: var(--t-xs); }
 .botao-perigo { border-color: var(--erro); color: var(--erro); }
 .botao-perigo:hover { background: var(--erro-fraco); }
 
@@ -223,7 +350,7 @@ button[disabled] { opacity: .45; cursor: not-allowed; }
   background: var(--fundo);
 }
 .menu .grupo-titulo {
-  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .1em;
   color: var(--texto-3); margin: 14px 8px 6px; font-weight: 700;
 }
 .menu button {
@@ -242,10 +369,13 @@ button[disabled] { opacity: .45; cursor: not-allowed; }
   background: var(--acento-fraco);
   border-color: var(--acento);
   color: var(--acento);
-  font-weight: 650;
+  font-weight: 600;
 }
-.menu button small { display: block; font-size: 11.5px; color: var(--texto-3); font-weight: 400; }
-.menu button[aria-current="true"] small { color: var(--acento); opacity: .85; }
+.menu button small { display: block; font-size: var(--t-xs); color: var(--texto-3); font-weight: 400; }
+/* O `opacity: .85` daqui apagava a única linha que diz de que trata o
+   módulo aberto, e a levava a 3,9:1 — abaixo dos 4,5:1 de texto miúdo.
+   A cor de acento sozinha já distingue o módulo atual. */
+.menu button[aria-current="true"] small { color: var(--acento); }
 
 /* coluna 2 — o palco */
 .palco { padding: 20px 24px 70px; min-width: 0; }
@@ -262,10 +392,42 @@ button[disabled] { opacity: .45; cursor: not-allowed; }
   align-self: start;
   max-height: calc(100vh - 47px);
   overflow-y: auto;
-  padding: 14px 16px 40px;
+  padding: 14px 16px 0;
   border-left: 1px solid var(--borda);
   background: var(--painel-2);
 }
+
+/* ⚠ O BOTÃO QUE ELE VEIO USAR FICAVA ABAIXO DA DOBRA.
+
+   A Bancada tem 1.944px de conteúdo em 788px de janela. Medido: o
+   `Copiar prompt` nascia 1.033px abaixo do que se vê, e o custo em
+   Anlas, 1.420px abaixo. Ou seja, as duas coisas que o autor mais
+   precisa — quanto vai custar e como levar o prompt embora — eram as
+   duas mais escondidas da tela.
+
+   A regra de TDAH que manda aqui: o estado atual fica à vista o tempo
+   todo, porque memória de trabalho é justamente o que falha. Então o
+   custo e o botão principal descolam do fim da lista e viram um rodapé
+   grudado no pé da Bancada, que acompanha a rolagem. */
+.bancada-rodape {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  margin: 14px -16px 0;
+  padding: 10px 16px 12px;
+  background: var(--painel-2);
+  border-top: 1px solid var(--borda-forte);
+  box-shadow: 0 -6px 14px -8px rgba(0,0,0,.25);
+}
+.bancada-rodape .custo-agora {
+  display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+  font-size: var(--t-sm);
+  color: var(--texto-2);
+  margin-bottom: 8px;
+}
+.bancada-rodape .custo-agora strong { color: var(--texto); font-size: var(--t-md); }
+.bancada-rodape .acoes-bancada { margin-top: 0; }
+.bancada-rodape .botao-forte { flex: 1 1 auto; }
 
 @media (max-width: 1180px) {
   .corpo { grid-template-columns: 190px minmax(0,1fr); }
@@ -273,9 +435,19 @@ button[disabled] { opacity: .45; cursor: not-allowed; }
     grid-column: 1 / -1;
     position: static;
     max-height: none;
+    /* `overflow-y: auto` tem de sair junto com o `max-height`. Enquanto ele
+       ficava, a Bancada continuava sendo uma caixa de rolagem própria —
+       mesmo sem nada a rolar — e o rodapé grudava no pé DELA, que aqui fica
+       fora da tela, em vez de grudar no pé da janela. Medido em 900px de
+       largura: o rodapé parava em 978px numa janela de 800px. */
+    overflow: visible;
+    padding-bottom: 0;
     border-left: none;
     border-top: 2px solid var(--borda);
   }
+  /* Sem caixa de rolagem própria, o rodapé passa a grudar no pé da JANELA
+     enquanto a Bancada está à vista — mesmo efeito, outro referencial. */
+  .bancada-rodape { margin-bottom: 0; }
 }
 @media (max-width: 760px) {
   .corpo { grid-template-columns: 1fr; }
@@ -303,13 +475,13 @@ button[disabled] { opacity: .45; cursor: not-allowed; }
   border-radius: var(--raio-p);
   padding: 10px 13px;
   margin: 0 0 12px;
-  font-size: 14px;
+  font-size: var(--t-md);
 }
 .nota.amarela { border-left-color: var(--aviso); background: var(--aviso-fraco); }
 .nota.vermelha { border-left-color: var(--erro); background: var(--erro-fraco); }
 .nota.verde   { border-left-color: var(--ok); background: var(--ok-fraco); }
 .nota .rot {
-  display: block; font-size: 11px; font-weight: 800;
+  display: block; font-size: var(--t-xs); font-weight: 800;
   text-transform: uppercase; letter-spacing: .09em; margin-bottom: 3px;
 }
 .nota .rot         { color: var(--info); }
@@ -328,12 +500,21 @@ button[disabled] { opacity: .45; cursor: not-allowed; }
 .gaveta { margin-bottom: 10px; border: 1px solid var(--borda); border-radius: var(--raio); background: var(--painel); overflow: hidden; }
 .gaveta > summary {
   cursor: pointer;
-  padding: 10px 14px;
-  font-weight: 650;
+  padding: 12px 14px;
+  min-height: 44px;
+  font-weight: 600;
   background: var(--painel-2);
   list-style: none;
   display: flex; align-items: center; gap: 10px;
 }
+/* `--painel-3` foi tentado aqui e reprovou: a conta de tags da gaveta usa
+   --texto-3, e sobre --painel-3 ela dá 4,44:1 no tema claro — seis
+   centésimos abaixo do mínimo. Sobre --acento-fraco dá 4,80:1. */
+.gaveta > summary:hover { background: var(--acento-fraco); }
+/* A gaveta aberta é a decisão em curso: ela ganha a borda de acento, e as
+   fechadas ficam quietas. Um destaque por área. */
+.gaveta[open] { border-color: var(--borda-forte); }
+.gaveta[open] > summary { color: var(--acento); }
 .gaveta > summary::-webkit-details-marker { display: none; }
 .gaveta > summary::before {
   content: "";
@@ -348,77 +529,210 @@ button[disabled] { opacity: .45; cursor: not-allowed; }
 .gaveta[open] > summary::before { transform: rotate(90deg); }
 .gaveta > summary .cont {
   margin-left: auto;
-  font-size: 12px; font-weight: 400; color: var(--texto-3);
+  font-size: var(--t-xs); font-weight: 400; color: var(--texto-3);
   font-family: var(--mono);
 }
 .gaveta .miolo { padding: 12px 14px 14px; }
 
 .subgaveta { margin-bottom: 14px; }
 .subgaveta:last-child { margin-bottom: 0; }
+/* Sem CAIXA ALTA: eram nove blocos maiúsculos na mesma tela, e maiúscula
+   é mais lenta de ler justamente para quem já lê com dificuldade. Sobram
+   só as etiquetas curtas de verdade (a marca, o menu, o rótulo de aviso,
+   o selo). */
 .subgaveta > .rotulo {
-  font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em;
-  color: var(--texto-3); font-weight: 700; margin-bottom: 7px;
+  font-size: var(--t-sm); letter-spacing: .01em;
+  color: var(--texto-2); font-weight: 700; margin-bottom: 8px;
   display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
 }
 .subgaveta > .rotulo .so-uma {
-  text-transform: none; letter-spacing: 0; font-weight: 400;
-  color: var(--texto-3); font-size: 11.5px;
+  letter-spacing: 0; font-weight: 400;
+  color: var(--texto-3); font-size: var(--t-xs);
 }
 
 .bolinhas { display: flex; flex-wrap: wrap; gap: 6px; }
 
+/* A pastilha tem DUAS peças, e o desenho precisa deixar isso óbvio sem
+   texto de ajuda: o corpo (a palavra) abre a ficha, o + do canto põe a tag
+   no prompt. A divisória entre as duas é a única pista de que são gestos
+   diferentes, então ela existe sempre — não só ao passar o mouse.
+
+   O estado "está no prompt" mudou de `aria-pressed` para `data-posta`,
+   porque a pastilha deixou de ser um botão. */
+/* ⚠ O ALVO PRINCIPAL ERA O MENOR DA PASTILHA.
+
+   Medido: a palavra, que só ABRE a ficha, tinha 122×29px. O `+`, que é o
+   gesto pelo qual o autor veio até aqui — pôr a tag no prompt —, tinha
+   28×29px. Quatro vezes menos alvo para a ação principal, e abaixo do
+   mínimo de 44px que dedo e mão trêmula exigem.
+
+   Hoje a pastilha tem 44px de altura e o `+` tem 44px de largura. A
+   palavra continua clicável e continua maior no total, mas deixou de ser
+   a única confortável. */
 .bolinha {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex; align-items: stretch;
   border: 1px solid var(--borda-forte);
   background: var(--painel-2);
-  border-radius: 999px;
-  padding: 4px 11px;
-  font-size: 13.5px;
+  border-radius: var(--raio-pilula);
+  font-size: var(--t-sm);
   font-family: var(--mono);
-  cursor: pointer;
+  /* 46 e não 44: a borda de 1px de cada lado sai da conta, e o que precisa
+     ter 44px é o BOTÃO de dentro, que é onde o dedo cai. */
+  min-height: 46px;
   max-width: 100%;
+  overflow: hidden;
   transition: background .12s, border-color .12s;
 }
-.bolinha:hover { background: var(--acento-fraco); border-color: var(--acento); }
-.bolinha[aria-pressed="true"] {
+.bolinha:hover { border-color: var(--acento); }
+
+.bolinha-ler {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 0; background: transparent; color: inherit;
+  font: inherit;
+  padding: 4px 6px 4px 14px;
+  cursor: pointer;
+  max-width: 100%;
+}
+.bolinha-ler:hover { background: var(--acento-fraco); }
+.bolinha-ler[aria-expanded="true"] { background: var(--acento-fraco); font-weight: 700; }
+
+.bolinha-por {
+  border: 0; border-left: 1px solid var(--borda-forte);
+  background: transparent; color: var(--texto-2);
+  font: inherit; font-size: var(--t-xl); line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  min-width: 44px;
+  flex: none;
+}
+.bolinha-por:hover { background: var(--acento-fraco); color: var(--acento); }
+
+.bolinha[data-posta="true"] {
   background: var(--acento);
   border-color: var(--acento);
   color: #fff;
   font-weight: 600;
 }
-:root[data-theme="dark"] .bolinha[aria-pressed="true"] { color: #1a1207; }
+.bolinha[data-posta="true"] .bolinha-ler:hover,
+.bolinha[data-posta="true"] .bolinha-por:hover { background: rgba(255,255,255,.18); color: inherit; }
+.bolinha[data-posta="true"] .bolinha-por { border-left-color: rgba(255,255,255,.45); color: inherit; }
+:root[data-theme="dark"] .bolinha[data-posta="true"] { color: #1a1207; }
+:root[data-theme="dark"] .bolinha[data-posta="true"] .bolinha-ler:hover,
+:root[data-theme="dark"] .bolinha[data-posta="true"] .bolinha-por:hover { background: rgba(0,0,0,.18); }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .bolinha[aria-pressed="true"] { color: #1a1207; }
+  :root:not([data-theme="light"]) .bolinha[data-posta="true"] { color: #1a1207; }
+  :root:not([data-theme="light"]) .bolinha[data-posta="true"] .bolinha-ler:hover,
+  :root:not([data-theme="light"]) .bolinha[data-posta="true"] .bolinha-por:hover { background: rgba(0,0,0,.18); }
 }
-.bolinha .pt {
-  font-family: var(--sans);
-  font-size: 12px;
-  opacity: .72;
+/* A palavra em inglês é a parte que a máquina lê, então é a que não pode
+   quebrar no meio dentro da pastilha. Tags de três palavras (very wide
+   shot) quebravam e a pastilha virava duas linhas desalinhadas. */
+.bolinha .en {
   white-space: nowrap;
 }
-.bolinha .selo-nv {
-  font-family: var(--sans); font-size: 10px; font-weight: 800;
-  color: var(--aviso); border: 1px solid var(--aviso);
-  border-radius: 4px; padding: 0 3px; letter-spacing: .04em;
+/* A tradução em português é a metade que o autor de fato lê — ele não sabe
+   inglês de tag. O `opacity: .72` a levava a 3,4:1, abaixo do mínimo de
+   4,5:1. Hoje ela usa uma cor medida, e continua mais discreta que a
+   palavra em inglês por ser menor e sem negrito, não por estar apagada. */
+.bolinha .pt {
+  font-family: var(--sans);
+  font-size: var(--t-xs);
+  color: var(--texto-2);
+  white-space: nowrap;
 }
-.bolinha[aria-pressed="true"] .selo-nv { color: inherit; border-color: currentColor; }
-.bolinha.bloqueada { opacity: .42; }
+.bolinha[data-posta="true"] .pt { color: inherit; }
+.bolinha .selo-nv {
+  font-family: var(--sans); font-size: var(--t-xs); font-weight: 800;
+  color: var(--aviso); border: 1px solid var(--aviso);
+  border-radius: var(--raio-mini); padding: 0 4px; letter-spacing: .04em;
+}
+.bolinha[data-posta="true"] .selo-nv { color: inherit; border-color: currentColor; }
 
-.linha-busca { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+/* Linha da Régua que não é pastilha: veio da caixa de texto livre. Ela não
+   tem cadeado, e a borda tracejada diz isso antes de qualquer texto. */
+.regua li.de-livre { border-left: 2px dashed var(--borda-forte); }
+.regua li.de-livre .discreto { font-size: var(--t-xs); }
+
+/* ---------- o pincel de máscara (Inpaint) ---------------------------- */
+
+/* A imagem embaixo, o canvas em cima, exatamente do mesmo tamanho. O canvas
+   pinta branco opaco (é isso que o NovelAI espera receber como máscara), e a
+   opacidade fica no CSS — assim ele enxerga o desenho por baixo enquanto
+   pinta, e a exportação continua sendo branco puro. */
+.mascara-palco {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio);
+  overflow: hidden;
+  background: var(--painel-2);
+  line-height: 0;
+}
+.mascara-palco img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.mascara-tela {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .5;
+  cursor: crosshair;
+  /* sem isto, arrastar o dedo rola a página em vez de pintar */
+  touch-action: none;
+}
+
+/* A busca é o caminho principal do Armazém, e por isso é o maior alvo da
+   tela: 48px de altura, largura inteira, com o rótulo por cima em vez de
+   dentro do campo (texto de dentro some ao digitar, e quem se distrai
+   perde o que estava procurando). */
+.busca-rotulo { display: block; font-weight: 600; color: var(--texto); margin-bottom: 6px; }
+.linha-busca { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 6px; }
+.linha-busca input[type="search"] {
+  min-height: 48px;
+  font-size: var(--t-lg);
+  padding: 8px 14px;
+  flex: 1 1 100%;
+}
+#conta-busca { min-height: 1.5em; margin-bottom: 14px; }
+#conta-busca:empty { margin-bottom: 4px; }
+
+/* A gaveta de ajuda não é uma gaveta de tags: ela fica quieta, sem o fundo
+   de painel, para não disputar com as dezessete de verdade. */
+.gaveta-ajuda { background: transparent; border-style: dashed; margin-bottom: 16px; }
+.gaveta-ajuda > summary { background: transparent; font-weight: 400; color: var(--texto-2); }
+.gaveta-ajuda[open] > summary { color: var(--texto); font-weight: 600; }
 input[type="text"], input[type="search"], input[type="password"], input[type="number"], textarea, select {
   font: inherit;
-  font-size: 14px;
+  font-size: var(--t-md);
   color: var(--texto);
   background: var(--painel);
   border: 1px solid var(--borda-forte);
   border-radius: var(--raio-p);
   padding: 7px 10px;
 }
-textarea { width: 100%; resize: vertical; font-family: var(--mono); font-size: 13.5px; line-height: 1.5; }
+textarea { width: 100%; resize: vertical; font-family: var(--mono); font-size: var(--t-sm); line-height: 1.5; }
 input[type="search"] { min-width: 240px; flex: 1 1 240px; }
-label { font-size: 13.5px; color: var(--texto-2); }
+label { font-size: var(--t-sm); color: var(--texto-2); }
 
 /* ---------- ficha da tag (o pop com exemplo) ------------------------- */
+
+/* O lugar onde a ficha da tag clicada aparece. Fica vazio até o primeiro
+   clique, e por isso não pode reservar altura nenhuma — reservar faria a
+   gaveta abrir com um buraco no meio.
+
+   Ele mora DENTRO da subgaveta, logo abaixo das pastilhas dela. Antes havia
+   um slot só, no topo do módulo, e a ficha nascia a milhares de pixels de
+   onde o dedo clicou: medido no navegador, entre 938 e 7.688 pixels acima da
+   janela, invisível nas cinco tags testadas. */
+.ficha-slot:empty { display: none; }
+.ficha-slot { scroll-margin-top: 12px; }
+.subgaveta > .ficha-slot { margin-top: 4px; }
 
 .ficha-tag {
   border: 1px solid var(--acento);
@@ -428,15 +742,15 @@ label { font-size: 13.5px; color: var(--texto-2); }
   margin: 8px 0 12px;
   box-shadow: var(--sombra);
 }
-.ficha-tag .tag-en { font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--acento); }
-.ficha-tag .tag-pt { color: var(--texto-2); font-size: 14px; }
+.ficha-tag .tag-en { font-family: var(--mono); font-size: var(--t-lg); font-weight: 700; color: var(--acento); }
+.ficha-tag .tag-pt { color: var(--texto-2); font-size: var(--t-md); }
 .ficha-tag .explica { margin: 8px 0; max-width: 62ch; }
-.ficha-tag .fonte { font-size: 12px; color: var(--texto-3); font-family: var(--mono); }
+.ficha-tag .fonte { font-size: var(--t-xs); color: var(--texto-3); font-family: var(--mono); }
 
 .selo {
   display: inline-flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
-  border-radius: 5px; padding: 2px 7px;
+  font-size: var(--t-xs); font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+  border-radius: var(--raio-mini); padding: 2px 7px;
   border: 1px solid currentColor;
 }
 .selo-esquema { color: var(--info); background: var(--info-fraco); }
@@ -444,7 +758,7 @@ label { font-size: 13.5px; color: var(--texto-2); }
 .selo-nenhum  { color: var(--texto-3); background: var(--painel-2); }
 
 .exemplo-caixa { margin-top: 10px; }
-.exemplo-caixa .legenda { font-size: 12.5px; color: var(--texto-3); margin-top: 6px; }
+.exemplo-caixa .legenda { font-size: var(--t-xs); color: var(--texto-3); margin-top: 6px; }
 
 .solta-aqui {
   border: 2px dashed var(--borda-forte);
@@ -457,7 +771,7 @@ label { font-size: 13.5px; color: var(--texto-2); }
   padding: 14px;
   text-align: center;
   color: var(--texto-3);
-  font-size: 13.5px;
+  font-size: var(--t-sm);
   cursor: pointer;
 }
 .solta-aqui:hover, .solta-aqui.sobre { border-color: var(--acento); background: var(--acento-fraco); color: var(--acento); }
@@ -479,12 +793,12 @@ label { font-size: 13.5px; color: var(--texto-2); }
 
 /* ---------- Bancada --------------------------------------------------- */
 
-.bancada h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--texto-3); margin: 16px 0 6px; }
+.bancada h3 { font-size: var(--t-md); letter-spacing: .01em; color: var(--texto-2); margin: 16px 0 6px; }
 .bancada h3:first-of-type { margin-top: 0; }
 
 .saida {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: var(--t-sm);
   line-height: 1.55;
   white-space: pre-wrap;
   word-break: break-word;
@@ -500,47 +814,52 @@ label { font-size: 13.5px; color: var(--texto-2); }
 .saida .peso { color: var(--acento); font-weight: 700; }
 .saida .txt-final { color: var(--info); font-weight: 700; }
 
-.contador { font-size: 12px; color: var(--texto-3); font-family: var(--mono); margin-top: 4px; }
+.contador { font-size: var(--t-xs); color: var(--texto-3); font-family: var(--mono); margin-top: 4px; }
 
 .acoes-bancada { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
 
 /* ---------- listas e tabelas ------------------------------------------ */
 
-table { border-collapse: collapse; width: 100%; font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: var(--t-md); }
 th, td { border: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
-th { background: var(--painel-2); font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-2); }
+th { background: var(--painel-2); font-size: var(--t-sm); font-weight: 700; letter-spacing: .01em; color: var(--texto-2); }
 .rolagem { overflow-x: auto; }
 
 ul.limpa, ol.limpa { margin: 0 0 12px; padding-left: 20px; }
 ul.limpa li, ol.limpa li { margin-bottom: 5px; }
 
-code, .mono { font-family: var(--mono); font-size: 13px; background: var(--painel-2); border-radius: 4px; padding: 1px 5px; }
+code, .mono { font-family: var(--mono); font-size: var(--t-sm); background: var(--painel-2); border-radius: var(--raio-mini); padding: 1px 5px; }
 
 /* ---------- Régua de ordem -------------------------------------------- */
 
 .regua { display: grid; grid-template-columns: 1fr 46px 1fr; gap: 0; align-items: stretch; }
-.regua .col-cab { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--texto-3); font-weight: 700; padding: 0 0 8px; }
+/* cada coluna é uma pilha: cabeçalho em cima, e o resto ocupando o que sobra.
+   Sem isso a faixa do meio nasce com altura zero e os traços não têm onde ser
+   desenhados. */
+.regua > div { display: flex; flex-direction: column; min-width: 0; }
+.regua > div > ol, .regua > div > .tracos { flex: 1 1 auto; }
+.regua .col-cab { font-size: var(--t-sm); letter-spacing: .01em; color: var(--texto-2); font-weight: 700; padding: 0 0 8px; min-height: 1.4em; }
 .regua ol { list-style: none; margin: 0; padding: 0; }
 .regua li {
   display: flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 13px;
+  font-family: var(--mono); font-size: var(--t-sm);
   padding: 5px 9px; margin-bottom: 4px;
   border: 1px solid var(--borda); border-radius: var(--raio-p);
   background: var(--painel);
   min-height: 32px;
 }
 .regua li.mudou { border-color: var(--acento); background: var(--acento-fraco); }
-.regua li .num { font-size: 11px; color: var(--texto-3); min-width: 18px; }
+.regua li .num { font-size: var(--t-xs); color: var(--texto-3); min-width: 18px; }
 .regua li .cadeado { margin-left: auto; }
 .regua .tracos { position: relative; }
 .regua .tracos svg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--acento); }
 .motivos { margin-top: 14px; }
-.motivos li { font-size: 13.5px; margin-bottom: 6px; }
-.motivos .mono { font-size: 12.5px; }
+.motivos li { font-size: var(--t-sm); margin-bottom: 6px; }
+.motivos .mono { font-size: var(--t-xs); }
 
 .cadeado {
   border: 1px solid var(--borda); background: var(--painel-2);
-  border-radius: 5px; width: 24px; height: 22px; padding: 0;
+  border-radius: var(--raio-mini); width: 24px; height: 22px; padding: 0;
   display: inline-flex; align-items: center; justify-content: center;
   cursor: pointer; flex: none;
 }
@@ -552,10 +871,10 @@ code, .mono { font-family: var(--mono); font-size: 13px; background: var(--paine
 
 .peso-linha { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .peso-btn {
-  width: 26px; height: 26px; padding: 0; font-weight: 800; font-size: 15px;
+  width: 26px; height: 26px; padding: 0; font-weight: 800; font-size: var(--t-base);
   display: inline-flex; align-items: center; justify-content: center;
 }
-.peso-mostra { font-family: var(--mono); font-size: 12.5px; color: var(--texto-2); min-width: 92px; }
+.peso-mostra { font-family: var(--mono); font-size: var(--t-xs); color: var(--texto-2); min-width: 92px; }
 
 /* ---------- escolhidas ------------------------------------------------ */
 
@@ -563,20 +882,24 @@ code, .mono { font-family: var(--mono); font-size: 13px; background: var(--paine
 .escolhida {
   display: inline-flex; align-items: center; gap: 6px;
   border: 1px solid var(--acento); background: var(--acento-fraco); color: var(--acento);
-  border-radius: 999px; padding: 3px 6px 3px 11px;
-  font-family: var(--mono); font-size: 13px;
+  border-radius: var(--raio-pilula); padding: 3px 6px 3px 11px;
+  font-family: var(--mono); font-size: var(--t-sm);
 }
+/* O × era o único jeito de tirar uma tag daqui, e estava a 70% de
+   opacidade num alvo de 8px. Hoje é opaco e tem 28px. */
 .escolhida .x {
   border: none; background: transparent; color: inherit;
-  font-size: 15px; line-height: 1; padding: 0 4px; cursor: pointer; opacity: .7;
+  font-size: var(--t-lg); line-height: 1; cursor: pointer;
+  min-width: 28px; min-height: 28px; padding: 0;
+  border-radius: var(--raio-pilula);
 }
-.escolhida .x:hover { opacity: 1; background: transparent; }
+.escolhida .x:hover { background: var(--acento); color: var(--painel); }
 
 /* ---------- passos do ateliê ------------------------------------------ */
 
 .passos { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
-.passos button { border-radius: 999px; font-size: 13px; padding: 5px 12px; }
-.passos button[aria-current="true"] { background: var(--acento); border-color: var(--acento); color: #fff; font-weight: 650; }
+.passos button { border-radius: var(--raio-pilula); font-size: var(--t-sm); padding: 5px 12px; }
+.passos button[aria-current="true"] { background: var(--acento); border-color: var(--acento); color: #fff; font-weight: 600; }
 :root[data-theme="dark"] .passos button[aria-current="true"] { color: #1a1207; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .passos button[aria-current="true"] { color: #1a1207; }
@@ -591,35 +914,274 @@ code, .mono { font-family: var(--mono); font-size: 13px; background: var(--paine
   text-align: left; cursor: pointer; box-shadow: var(--sombra);
 }
 .cartao:hover { border-color: var(--acento); }
-.cartao b { display: block; font-size: 15.5px; margin-bottom: 4px; }
-.cartao span { display: block; font-size: 13.5px; color: var(--texto-2); line-height: 1.45; }
-.cartao .custo { margin-top: 8px; font-family: var(--mono); font-size: 12px; color: var(--texto-3); }
+.cartao b { display: block; font-size: var(--t-base); margin-bottom: 4px; }
+.cartao span { display: block; font-size: var(--t-sm); color: var(--texto-2); line-height: 1.45; }
+.cartao .custo { margin-top: 8px; font-family: var(--mono); font-size: var(--t-xs); color: var(--texto-3); }
 
 /* ---------- álbum ------------------------------------------------------ */
 
 .grade-album { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
 .item-album { border: 1px solid var(--borda); border-radius: var(--raio); background: var(--painel); padding: 8px; }
 .item-album img { width: 100%; height: 140px; object-fit: cover; border-radius: var(--raio-p); background: var(--painel-3); }
-.item-album .nome { font-size: 12.5px; margin-top: 6px; word-break: break-word; }
-.item-album .quando { font-size: 11px; color: var(--texto-3); font-family: var(--mono); }
+.item-album .nome { font-size: var(--t-xs); margin-top: 6px; word-break: break-word; }
+.item-album .quando { font-size: var(--t-xs); color: var(--texto-3); font-family: var(--mono); }
+
+/* ---------- a grade 5×5 de posição do personagem ----------------------- */
+/* Todas as cores saem das variáveis de :root, como o resto do arquivo:
+   nenhuma cor nasce dentro do bloco de tema escuro. */
+
+.grade-pos {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  width: 170px;
+  aspect-ratio: 1 / 1;
+  margin: 10px 0;
+  padding: 4px;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio-p);
+  background: var(--painel-2);
+}
+.grade-pos .casa {
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-mini);
+  background: var(--painel);
+  padding: 0;
+  cursor: pointer;
+  min-height: 0;
+}
+.grade-pos .casa:hover { border-color: var(--acento-2); background: var(--acento-fraco); }
+.grade-pos .casa.marcada { background: var(--acento); border-color: var(--acento); }
+.grade-pos .casa:focus-visible { outline: 2px solid var(--acento); outline-offset: 1px; }
+
+/* ---------- o glossário (palavra técnica explicada) -------------------- */
+
+.glossario {
+  border-left: 3px solid var(--info);
+  background: var(--info-fraco);
+  color: var(--texto-2);
+  padding: 6px 10px;
+  border-radius: 0 var(--raio-p) var(--raio-p) 0;
+  margin: 6px 0 12px;
+}
+
+/* ---------- enquanto a oficina lê o disco ------------------------------ */
+/* A Bancada continua visível — o autor precisa VER o que existe. O que ela
+   não aceita é clique, porque escrever agora apagaria o que está no disco.
+
+   ⚠ O `opacity: .62` DAQUI ERA A PIOR LEITURA DA OFICINA INTEIRA.
+
+   Opacidade no pai MULTIPLICA a opacidade de tudo que está dentro. O
+   texto miúdo da Bancada, que já vinha apagado de propósito, caía a
+   1,73:1 — praticamente invisível. E acontecia justamente no momento em
+   que o autor precisa LER o que há na tela para responder se recupera o
+   trabalho do disco ou começa do zero.
+
+   Hoje o sinal de "não dá para clicar" é o fundo mudar e a borda ficar
+   tracejada. Nenhuma letra perde contraste. */
+
+body.recuperando .bancada,
+body.recuperando .gaveta {
+  pointer-events: none;
+  /* `--aviso-fraco` e não `--painel-3`: é a mesma cor da faixa que faz a
+     pergunta, então a tela diz sem palavra nenhuma quem está esperando
+     resposta. E é a única que passa nos dois temas com as quatro cores de
+     texto que caem aqui — a pior delas dá 4,96:1 (contra 4,44:1 do
+     --painel-3, que reprovava). */
+  background: var(--aviso-fraco);
+  border-style: dashed;
+  border-color: var(--aviso);
+}
+body.recuperando #faixa-recuperacao {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#faixa-recuperacao {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: var(--sombra);
+}
+#faixa-recuperacao button { margin-right: 8px; }
 
 /* ---------- diversos --------------------------------------------------- */
 
 .oculto { display: none !important; }
-.discreto { color: var(--texto-3); font-size: 13px; }
+.discreto { color: var(--texto-3); font-size: var(--t-sm); }
 .aperto { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 hr { border: none; border-top: 1px solid var(--borda); margin: 18px 0; }
 
 .torrada {
   position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
   background: var(--texto); color: var(--fundo);
-  padding: 10px 18px; border-radius: 999px;
+  padding: 10px 18px; border-radius: var(--raio-pilula);
   box-shadow: var(--sombra-alta);
-  font-size: 14px; z-index: 90;
+  font-size: var(--t-md); z-index: 90;
   opacity: 0; pointer-events: none; transition: opacity .18s;
 }
 .torrada.visivel { opacity: 1; }
 
 .carregando { color: var(--texto-3); font-style: italic; }
 
+/* ---------- compositor de cena ---------------------------------------- */
+
+.cena-seletor {
+  display: flex; gap: 12px; align-items: center;
+  margin: 14px 0 20px;
+  padding: 12px 14px;
+  background: var(--painel-2);
+  border-radius: var(--raio-p);
+}
+.cena-seletor label { font-weight: 600; }
+.cena-seletor select {
+  padding: 6px 10px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-p);
+  background: var(--painel);
+  color: var(--texto);
+  font-family: var(--sans);
+  font-size: var(--t-md);
+  cursor: pointer;
+}
+
+.compositor-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.compositor-card {
+  background: var(--painel);
+  border: 2px solid var(--borda);
+  border-radius: var(--raio);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  transition: border-color .2s, box-shadow .2s;
+}
+.compositor-card:hover {
+  border-color: var(--acento-2);
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+
+.card-cabeca {
+  background: var(--painel-2);
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--borda);
+}
+.card-cabeca h4 { margin: 0 0 4px; }
+.card-tipo { font-size: var(--t-xs); color: var(--texto-3); margin: 0; font-weight: 400; }
+
+.card-body {
+  padding: 14px 16px;
+}
+
+.card-tags-info {
+  font-size: var(--t-sm); color: var(--texto-2); font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.card-tags-lista ul {
+  list-style: none; padding: 0; margin: 0 0 12px;
+  font-size: var(--t-sm); font-family: var(--mono);
+  color: var(--texto);
+}
+.card-tags-lista li {
+  margin: 0 0 4px;
+  padding: 0 0 0 16px;
+  position: relative;
+}
+.card-tags-lista li::before {
+  content: "•"; position: absolute; left: 0;
+  color: var(--acento-2); font-weight: 700;
+}
+.card-tags-lista li.mais {
+  color: var(--texto-3); font-style: italic;
+}
+.card-tags-lista .vazio {
+  font-size: var(--t-sm); color: var(--texto-3); font-style: italic;
+  margin: 0;
+}
+
+.botao-card-editar {
+  display: block; width: 100%;
+  padding: 10px 12px;
+  background: var(--acento-fraco);
+  color: var(--acento);
+  border: 1px solid var(--acento-fraco);
+  border-radius: var(--raio-p);
+  font-weight: 600; font-size: var(--t-sm);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+/* O hover pintava laranja claro por baixo de branco: 3,0:1, reprovado.
+   Hoje o hover só firma a borda — a cor do texto não muda, então o
+   contraste é o mesmo do estado parado, que já passa. */
+.botao-card-editar:hover {
+  background: var(--acento-fraco);
+  border-color: var(--acento);
+}
+
+.compositor-resumo {
+  background: var(--painel-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-p);
+  padding: 12px 14px;
+  margin-top: 14px;
+}
+.compositor-resumo h3 { font-size: var(--t-base); margin: 0 0 6px; }
+.compositor-resumo p { margin: 0; font-size: var(--t-sm); }
+
 @media print { .menu, .fita, .bancada { display: none; } .corpo { grid-template-columns: 1fr; } }
+
+/* ---------- quem pediu ao sistema para nada se mexer ------------------- */
+/* Não há animação decorativa nesta oficina, e isso é regra, não sobra: a
+   tela é para uma pessoa com TDAH avançado, e coisa que se move sozinha
+   rouba o pouco de atenção que sobra. O que existe são sete transições
+   curtas, de cor e de posição, que explicam uma mudança. Quem marcou
+   "reduzir movimento" no Windows não recebe nem essas. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- modo de alto contraste do Windows -------------------------- */
+/* Neste modo o sistema joga fora toda cor da página e usa a paleta dele.
+   O que ele NÃO substitui é o que foi pintado como fundo, sombra ou
+   transparência — então tudo que distinguia um estado aqui (a pastilha
+   posta, a gaveta aberta, o módulo atual do menu) virava igual a tudo o
+   mais. `border` e `outline` sobrevivem, e é com eles que os estados
+   voltam a ser visíveis. */
+@media (forced-colors: active) {
+  .bolinha,
+  .gaveta,
+  .caixa,
+  .cartao,
+  .compositor-card,
+  .item-album,
+  .bancada-rodape,
+  .saida {
+    border: 1px solid CanvasText;
+  }
+  .bolinha[data-posta="true"],
+  .menu button[aria-current="true"],
+  .passos button[aria-current="true"],
+  .cadeado[aria-pressed="true"],
+  .grade-pos .casa.marcada {
+    border: 3px solid Highlight;
+  }
+  .botao-forte { border: 2px solid CanvasText; }
+  button:focus-visible,
+  .bolinha-ler:focus-visible,
+  .bolinha-por:focus-visible,
+  .gaveta > summary:focus-visible,
+  input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 3px solid Highlight;
+  }
+  .lampada .bolha { border: 2px solid CanvasText; }
+}
