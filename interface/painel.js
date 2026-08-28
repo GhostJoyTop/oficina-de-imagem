@@ -2659,7 +2659,7 @@
       el("p", { texto: "Você põe uma imagem que já tem e diz o que quer trocar nela. A oficina escolhe a porta certa e explica o porquê." })
     ]));
 
-    var zona = el("div", {});
+    var zona = el("div", { id: "solta-retoque" });
     if (temImagemDeRetoque()) {
       zona.appendChild(el("img", { src: P.retoque.dados, alt: "a imagem que você vai retocar" }));
       zona.appendChild(el("span", { texto: P.retoque.nome }));
@@ -2755,8 +2755,27 @@
        o detalhe técnico completo só aparece depois que a imagem existe,
        porque é só aí que ele serve para alguma coisa. */
     if (!temImagemDeRetoque()) {
+      /* Achado D12, 27/08/2026 (URGENTE): a caixa de soltar imagem existe
+         (#solta-retoque), mas este aviso só tinha texto — "solte a imagem lá
+         em cima" — sem link, sem botão, sem rolagem. Quem já tinha descido a
+         tela até os cartões (o caso normal: os cartões ficam abaixo da
+         caixa) ficava preso, sem nada para clicar. Palavras do autor: "não
+         tem onde escolher o que vou faze com aimgem não tem nada não tem
+         botão". O botão abaixo simula um clique em #solta-retoque, que abre
+         o seletor de arquivo do sistema direto — zero rolagem, zero procura. */
       d.appendChild(nota("amarela", "Falta a imagem",
         "Solte a imagem que você quer mudar no espaço lá em cima. Sem ela, a oficina só consegue explicar o caminho — não dá para gerar nada ainda."));
+      d.appendChild(el("button", {
+        "class": "botao-forte", type: "button",
+        texto: "Escolher um arquivo agora",
+        ao: {
+          click: function () {
+            var caixa = $("#solta-retoque");
+            if (caixa) { caixa.click(); }
+            else { torrada("Não achei a caixa de soltar imagem nesta tela."); }
+          }
+        }
+      }));
       d.appendChild(el("p", { texto: c.resumo }));
       d.appendChild(linhaChave("Caminho que a oficina vai usar", glosar(c.ferramenta)));
       d.appendChild(linhaChave("Custo em Anlas", c.custo));
@@ -4128,6 +4147,234 @@
   }
 
   /* =================================================================
+     14.5 MÓDULO — TRADUTOR DE IMAGEM  (D13, 27/08/2026)
+
+     "Onde estão meu tradutor de imagem para tags?" — palavras dele. Não
+     existe ligação ao vivo entre esta tela (que roda só no computador
+     dele) e uma IA: isso pediria internet e uma conta paga a mais, já
+     descartada antes. O fluxo é sempre em três passos manuais:
+
+       1. Ele solta a imagem aqui. Ela é gravada na gaveta "referencias"
+          (o mesmo endpoint que já existia, `/api/imagem`).
+       2. Numa conversa com o Claude, fora desta tela, ele pede a
+          tradução. O agente `tradutor-imagem-oficina` lê a imagem e o
+          acervo inteiro, e grava `_traducao_<nome-da-imagem>.json` na
+          gaveta "prompts".
+       3. Esta tela mostra o resultado quando ele volta a abrir o
+          módulo — sem recarregar nada sozinha, porque nada aqui se move
+          sem ele pedir.
+
+     Isto tem de ficar dito com todas as letras, porque prometer
+     "automático" e não entregar é o mesmo defeito da Mesa de retoque
+     (D10/D12): uma porta que parece existir e não leva a lugar nenhum.
+     ================================================================= */
+
+  // Põe uma tag (do acervo, ou de texto livre) no prompt que está sendo
+  // montado agora (P.alvo). Não alterna: só acrescenta, e diz se já tinha.
+  function porTagDoTradutor(item) {
+    var reg = item && item.id ? tagDe(item.id) : null;
+    if (reg) {
+      var r = porTag(reg);
+      return { ok: true, jaTinha: !!r.jaTinha, tirou: r.tirou || [], rotulo: reg.tag };
+    }
+    var texto = (item && (item.tag || item.pt)) || "";
+    if (!texto) return { ok: false };
+    var lista = listaDe(P.alvo);
+    if (lista.some(function (x) { return x.tag === texto; })) {
+      return { ok: true, jaTinha: true, rotulo: texto };
+    }
+    lista.push(itemLivre(texto));
+    return { ok: true, jaTinha: false, rotulo: texto, livre: true };
+  }
+
+  function desenhaTraducaoPronta(trad, painel) {
+    var caixaTags = el("div", {});
+    (trad.tags_do_acervo || []).forEach(function (item) {
+      var linha = el("div", { "class": "peso-linha" });
+      linha.appendChild(el("span", {
+        texto: (item.pt || item.tag || "?") + (item.tag ? " (" + item.tag + ")" : "")
+      }));
+      if (item.confianca) {
+        linha.appendChild(el("span", { "class": "discreto", texto: "confiança: " + item.confianca }));
+      }
+      linha.appendChild(el("button", {
+        "class": "botao-p", type: "button", texto: "Pôr no prompt",
+        ao: {
+          click: function () {
+            if (travadoPelaRecuperacao()) return;
+            var r = porTagDoTradutor(item);
+            if (!r.ok) { torrada("Essa tag não tem texto para pôr no prompt."); return; }
+            salvarRascunho();
+            render();
+            torrada(r.jaTinha
+              ? (r.rotulo + " já estava no seu prompt.")
+              : "Pus " + r.rotulo + " no seu prompt (" + nomeDoAlvo(P.alvo) + ").");
+          }
+        }
+      }));
+      caixaTags.appendChild(linha);
+    });
+    painel.appendChild(caixaTags);
+
+    if ((trad.tags_do_acervo || []).length) {
+      painel.appendChild(el("button", {
+        "class": "botao-p", type: "button", texto: "Pôr todas no prompt",
+        ao: {
+          click: function () {
+            if (travadoPelaRecuperacao()) return;
+            var novas = 0, jaTinha = 0;
+            (trad.tags_do_acervo || []).forEach(function (item) {
+              var r = porTagDoTradutor(item);
+              if (r.ok) { if (r.jaTinha) jaTinha++; else novas++; }
+            });
+            salvarRascunho();
+            render();
+            torrada("Pus " + plural(novas, "tag nova", "tags novas") + " no seu prompt" +
+              (jaTinha ? " (" + jaTinha + " já " + (jaTinha === 1 ? "estava" : "estavam") + " lá)." : "."));
+          }
+        }
+      }));
+    }
+
+    if ((trad.descricao_livre || []).length) {
+      painel.appendChild(el("h4", { texto: "O que o acervo não cobre" }));
+      painel.appendChild(el("ul", { "class": "limpa" },
+        trad.descricao_livre.map(function (x) { return el("li", { texto: x }); })));
+    }
+    if (trad.notas_de_estilo) {
+      painel.appendChild(el("p", { texto: trad.notas_de_estilo }));
+    }
+    if ((trad.avisos_de_conteudo_restrito || []).length) {
+      painel.appendChild(nota("amarela", "Pode ser barrado pelo NovelAI",
+        trad.avisos_de_conteudo_restrito.join(" ")));
+    }
+    if (trad.traduzido_em) {
+      painel.appendChild(el("p", {
+        "class": "discreto",
+        texto: "Traduzido em " + String(trad.traduzido_em).replace("T", " ")
+      }));
+    }
+  }
+
+  function moduloTradutor(sec) {
+    limpar(sec);
+    sec.appendChild(el("div", { "class": "cabecalho-modulo" }, [
+      el("h2", { texto: "Tradutor de imagem" }),
+      el("p", { texto: "Solte uma imagem para virar tags — quem traduz não é esta tela, é uma conversa com o Claude." })
+    ]));
+
+    if (!global.Memoria) return;
+
+    var comoFunciona = el("details", { "class": "gaveta gaveta-ajuda" });
+    comoFunciona.appendChild(el("summary", { texto: "Como funciona, passo a passo" }));
+    comoFunciona.appendChild(el("div", { "class": "miolo" }, [
+      el("p", { texto: "1. Você solta a imagem aqui embaixo. Ela é guardada na sua pasta de referências." }),
+      el("p", { texto: "2. Numa conversa com o Claude, fora desta tela, peça para traduzir aquela imagem em tags. Ele olha a imagem e o acervo inteiro da oficina, e grava o resultado." }),
+      el("p", { texto: "3. Volte para esta tela e abra o módulo de novo. O resultado aparece pronto aqui embaixo, com um botão para pôr cada tag no seu prompt." })
+    ]));
+    sec.appendChild(comoFunciona);
+
+    sec.appendChild(nota("", "Isto não é automático",
+      "Não existe ligação direta entre a oficina e uma IA — pediria internet e uma conta paga a mais. " +
+      "Quem traduz a imagem é você, pedindo numa conversa com o Claude."));
+
+    sec.appendChild(caixa("Acrescentar uma tag do seu próprio punho", [
+      el("p", { texto: "Não precisa esperar tradução nenhuma para isto: escreva a tag e ela entra direto no prompt que você está montando." }),
+      (function () {
+        var campo = el("input", { type: "text", placeholder: "por exemplo: red hair, correndo, chuva forte" });
+        var botao = el("button", {
+          "class": "botao-p", type: "button", texto: "Acrescentar esta tag"
+        });
+        function acrescentar() {
+          if (travadoPelaRecuperacao()) return;
+          var texto = (campo.value || "").trim();
+          if (!texto) { torrada("Escreva a tag antes de acrescentar."); return; }
+          listaDe(P.alvo).push(itemLivre(texto));
+          campo.value = "";
+          salvarRascunho();
+          render();
+          torrada("Pus \"" + texto + "\" no seu prompt (" + nomeDoAlvo(P.alvo) + ").");
+        }
+        botao.addEventListener("click", acrescentar);
+        campo.addEventListener("keydown", function (ev) {
+          if (ev.key === "Enter") { ev.preventDefault(); acrescentar(); }
+        });
+        return el("div", { "class": "peso-linha" }, [campo, botao]);
+      })()
+    ]));
+
+    if (global.Memoria.seco()) {
+      sec.appendChild(nota("amarela", "Sem a janela preta não há onde guardar",
+        "A oficina está aberta sem a " + GLOSSARIO.ponte() + ", então não tem disco para gravar a imagem. " +
+        "Feche esta aba, dê dois cliques no ABRIR A OFICINA, e a caixa de soltar aparece aqui."));
+    } else {
+      var zona = el("div", {}, [
+        el("strong", { texto: "Solte aqui a imagem que você quer traduzir em tags" }),
+        el("span", { texto: "ou clique para escolher um arquivo do seu computador" })
+      ]);
+      zonaDeSolta(zona, function (arq) {
+        guardarImagemDeTrabalho(arq, "trad").then(function (nome) {
+          if (nome) torrada("Guardei a imagem. Peça a tradução dela numa conversa com o Claude.");
+          moduloTradutor(sec);
+        });
+      }, "Solte aqui a imagem a traduzir em tags");
+      sec.appendChild(zona);
+    }
+
+    var listaImagens = el("div", {});
+    sec.appendChild(caixa("As suas imagens", [listaImagens]));
+
+    Promise.all([
+      global.Memoria.listar("referencias"),
+      global.Memoria.listar("prompts")
+    ]).then(function (r) {
+      var imagens = (r[0] || []).filter(function (it) {
+        return /\.(png|jpe?g|webp|gif)$/i.test(it.nome) && !/^_/.test(it.nome);
+      });
+      var traducoes = {};
+      (r[1] || []).forEach(function (it) {
+        var m = /^_traducao_(.+)\.json$/i.exec(it.nome);
+        if (m) traducoes[m[1]] = it.nome;
+      });
+
+      limpar(listaImagens);
+      if (!imagens.length) {
+        listaImagens.appendChild(el("span", { "class": "discreto", texto: "Nenhuma imagem ainda. Solte uma acima." }));
+        return;
+      }
+
+      imagens.forEach(function (it) {
+        var painel = el("div", { "class": "caixa" });
+        var cabeca = el("div", { "class": "peso-linha" });
+        if (global.Ponte && global.Ponte.endereco) {
+          cabeca.appendChild(el("img", {
+            src: global.Ponte.endereco("referencias", it.nome), alt: it.nome, loading: "lazy",
+            style: "width:56px;height:56px;object-fit:cover;border-radius:8px"
+          }));
+        }
+        cabeca.appendChild(el("strong", { texto: it.nome }));
+        painel.appendChild(cabeca);
+        listaImagens.appendChild(painel);
+
+        var nomeTraducao = traducoes[it.nome];
+        if (!nomeTraducao) {
+          painel.appendChild(nota("amarela", "Ainda sem tradução",
+            "Peça para o Claude traduzir esta imagem numa conversa."));
+          return;
+        }
+
+        global.Memoria.ler("prompts", nomeTraducao.replace(/\.json$/i, "")).then(function (rr) {
+          if (!rr.ok || !rr.conteudo) {
+            painel.appendChild(nota("vermelha", "Não consegui abrir a tradução desta imagem", rr.erro || ""));
+            return;
+          }
+          desenhaTraducaoPronta(rr.conteudo, painel);
+        });
+      });
+    });
+  }
+
+  /* =================================================================
      15. A BANCADA — sempre visível, do lado direito
      ================================================================= */
 
@@ -5202,6 +5449,7 @@
     { id: "compositor", nome: "Compositor de Cena", sub: "múltiplos personagens lado a lado", render: moduloCompositor },
     { id: "atelie", nome: "Ateliê de personagem", sub: "criar do zero ou com referências", render: moduloAtelie },
     { id: "retoque", nome: "Mesa de retoque", sub: "mudar uma imagem que você tem", render: moduloRetoque },
+    { id: "tradutor", nome: "Tradutor de imagem", sub: "vira imagem em tag, com o Claude", render: moduloTradutor },
     { id: "regua", nome: "Régua de ordem", sub: "a ordem certa das tags", render: moduloRegua },
     { id: "recursos", nome: "Sala de recursos", sub: "tudo que o NovelAI faz", render: moduloRecursos },
     { id: "album", nome: "Álbum", sub: "o seu trabalho guardado", render: moduloAlbum },
