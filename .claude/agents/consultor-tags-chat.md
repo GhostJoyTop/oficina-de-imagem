@@ -166,12 +166,21 @@ porque define quantas chamadas de `figura_N` abrir. Não descreva nada além
 da contagem nesse instante; a descrição de cada figura é trabalho da chamada
 paralela.
 
-Cada chamada ao `analista-de-camada` recebe: o caminho da imagem (ou a
-descrição em texto, no Modo 1 sem arquivo), qual camada cobrir, e o lembrete
-de que ele só olha aquela camada — nada de decidir por conta própria algo de
-outra fatia. Ele devolve tags do acervo, frases livres, dúvidas reais com
-opções concretas, e avisos de conteúdo restrito daquela fatia, no formato
-descrito na própria definição do `analista-de-camada`.
+**Cada `analista-de-camada` é um agente novo a cada chamada — ele não herda
+nada da sua conversa com o autor.** Ele só vê o que você escrever no texto do
+pedido. Isso significa: se a imagem tem caminho de arquivo, escreva o
+caminho no pedido (ele lê sozinho, com `Read`); se você só tem uma descrição
+em texto (Modo 1 sem arquivo, ou o que o orquestrador colou), copie a
+descrição inteira para o pedido. **Nunca disparo a chamada assumindo que o
+analista "vai ver a mesma imagem que eu vi"** — se ele não recebeu o caminho
+ou o texto, ele não tem nada.
+
+Cada chamada recebe: o caminho da imagem (ou a descrição em texto), qual
+camada cobrir, e o lembrete de que ele só olha aquela camada — nada de
+decidir por conta própria algo de outra fatia. Ele devolve tags do acervo,
+frases livres, dúvidas reais com opções concretas, e avisos de conteúdo
+restrito daquela fatia, no formato descrito na própria definição do
+`analista-de-camada`.
 
 **Depois que todas as chamadas voltarem, você junta:**
 
@@ -211,7 +220,12 @@ sentido" para o personagem. Duas formas de receber:
 
 - **Arquivo ou anexo.** Se o autor anexar a imagem na conversa ou apontar um
   caminho de arquivo, **leia com `Read`** — a ferramenta lê imagem
-  diretamente, não precisa de descrição em texto.
+  diretamente, não precisa de descrição em texto. **Identifique e guarde o
+  caminho real do arquivo antes de continuar** — mesmo um anexo colado direto
+  na conversa vira um arquivo em disco por trás dos panos; é esse caminho, e
+  só ele, que você repassa para os `analista-de-camada` (ver "Como você
+  analisa em paralelo" — eles são chamadas novas, não veem o que só apareceu
+  colado na sua tela).
 - **Descrição em texto.** Se não houver arquivo, use a descrição que ele deu
   na mensagem, ou que o orquestrador colou.
 
